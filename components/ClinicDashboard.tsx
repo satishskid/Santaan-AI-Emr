@@ -2,13 +2,15 @@
 import React, { useState, useMemo } from 'react';
 import { Patient, TaskWithPatientInfo, UserRole, NewPatientOnboardingInfo } from '../types';
 import { ROLE_ICONS } from '../constants';
-import { BeakerIcon, SyringeIcon, ClockIcon, WarningIcon, UserPlusIcon, CalendarIcon, FilterIcon, SearchIcon } from './icons';
+import { BeakerIcon, SyringeIcon, ClockIcon, WarningIcon, UserPlusIcon, CalendarIcon, FilterIcon, SearchIcon, TrendingUpIcon, DatabaseIcon } from './icons';
 import TimelineEvent from './TimelineEvent';
 import { AddPatientModal } from './AddPatientModal';
 import { Card, Badge, Button } from './ui/DesignSystem';
 import DataQualityIndicator from './DataQualityIndicator';
 import WelcomeBanner from './WelcomeBanner';
 import SmartSchedulingPanel from './SmartSchedulingPanel';
+import ResourceOptimization from './ResourceOptimization';
+import DataTypes from './DataTypes';
 
 interface ClinicDashboardProps {
   patients: Patient[];
@@ -88,6 +90,7 @@ const ClinicDashboard: React.FC<ClinicDashboardProps> = ({ patients, onSelectPat
     const [viewMode, setViewMode] = useState<'timeline' | 'workflow' | 'priority' | 'optimization'>('workflow');
     const [filterRole, setFilterRole] = useState<UserRole | 'all'>('all');
     const [searchQuery, setSearchQuery] = useState('');
+    const [activeTab, setActiveTab] = useState<'dashboard' | 'resource_optimization' | 'data_types'>('dashboard');
     
     const { tasksWithConflicts, patientColorMap } = useMemo(() => {
         const allTasks: TaskWithPatientInfo[] = patients.flatMap((p, pIndex) =>
@@ -286,6 +289,36 @@ const ClinicDashboard: React.FC<ClinicDashboardProps> = ({ patients, onSelectPat
                 </div>
             </Card>
 
+            {/* Tab Navigation */}
+            <div className="border-b border-gray-200">
+                <nav className="-mb-px flex space-x-8">
+                    {[
+                        { id: 'dashboard', label: 'Dashboard', icon: CalendarIcon },
+                        { id: 'resource_optimization', label: 'Resource Optimization', icon: TrendingUpIcon },
+                        { id: 'data_types', label: 'Data Types', icon: DatabaseIcon }
+                    ].map((tab) => {
+                        const Icon = tab.icon;
+                        return (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id as any)}
+                                className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm ${
+                                    activeTab === tab.id
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                }`}
+                            >
+                                <Icon className="h-4 w-4" />
+                                <span>{tab.label}</span>
+                            </button>
+                        );
+                    })}
+                </nav>
+            </div>
+
+            {/* Tab Content */}
+            {activeTab === 'dashboard' && (
+                <>
             {/* Dynamic Content Based on View Mode */}
             {viewMode === 'workflow' && (
                 <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
@@ -507,6 +540,18 @@ const ClinicDashboard: React.FC<ClinicDashboardProps> = ({ patients, onSelectPat
                         console.log('Optimize schedule');
                     }}
                 />
+            )}
+                </>
+            )}
+
+            {/* Resource Optimization Tab */}
+            {activeTab === 'resource_optimization' && (
+                <ResourceOptimization currentUserRole={currentUserRole} />
+            )}
+
+            {/* Data Types Tab */}
+            {activeTab === 'data_types' && (
+                <DataTypes currentUserRole={currentUserRole} />
             )}
 
             {/* Add Patient Modal */}
