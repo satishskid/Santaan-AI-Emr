@@ -146,78 +146,22 @@ const createPatientPathway = (patientId: string, cycleStartDate: string): Patien
     }));
 };
 
-let allPatients: Patient[] = [
-    // Patient 1: Just starting consultation today
+// Production mode: Start with empty patient list
+// To enable demo data for testing, set DEMO_MODE=true in environment variables
+const DEMO_MODE = process.env.DEMO_MODE === 'true' || false;
+
+let allPatients: Patient[] = DEMO_MODE ? [
+    // Demo patient for testing - remove in production
     {
-        id: 'patient-001',
-        name: 'Sarah Chen',
-        age: 34,
-        partnerName: 'David Chen',
+        id: 'demo-patient-001',
+        name: 'Demo Patient',
+        age: 30,
+        partnerName: 'Demo Partner',
         protocol: 'Antagonist Protocol',
-        cycleStartDate: '2024-07-22', // Today
-        pathway: [],
-    },
-    // Patient 2: Mid-stimulation phase
-    {
-        id: 'patient-002',
-        name: 'Emily Rodriguez',
-        age: 29,
-        partnerName: 'Michael Rodriguez',
-        protocol: 'Long Agonist Protocol',
-        cycleStartDate: '2024-07-15', // Started a week ago
-        pathway: [],
-    },
-    // Patient 3: Ready for egg retrieval
-    {
-        id: 'patient-003',
-        name: 'Maria Patel',
-        age: 38,
-        partnerName: 'Raj Patel',
-        protocol: 'Antagonist Protocol',
-        cycleStartDate: '2024-07-12', // Started 10 days ago
-        pathway: [],
-    },
-    // Patient 4: Post-fertilization, awaiting Day 3 check
-    {
-        id: 'patient-004',
-        name: 'Jennifer Thompson',
-        age: 32,
-        partnerName: 'James Thompson',
-        protocol: 'Antagonist Protocol',
-        cycleStartDate: '2024-07-09', // Started 13 days ago
-        pathway: [],
-    },
-    // Patient 5: Ready for embryo transfer
-    {
-        id: 'patient-005',
-        name: 'Lisa Kim',
-        age: 35,
-        partnerName: 'Kevin Kim',
-        protocol: 'Long Agonist Protocol',
-        cycleStartDate: '2024-07-07', // Started 15 days ago
-        pathway: [],
-    },
-    // Patient 6: Awaiting pregnancy test
-    {
-        id: 'patient-006',
-        name: 'Amanda Johnson',
-        age: 31,
-        partnerName: 'Robert Johnson',
-        protocol: 'Antagonist Protocol',
-        cycleStartDate: '2024-06-28', // Started 24 days ago
-        pathway: [],
-    },
-    // Patient 7: Successful pregnancy (completed cycle)
-    {
-        id: 'patient-007',
-        name: 'Rachel Williams',
-        age: 33,
-        partnerName: 'Mark Williams',
-        protocol: 'Long Agonist Protocol',
-        cycleStartDate: '2024-06-15', // Completed cycle
+        cycleStartDate: new Date().toISOString().split('T')[0],
         pathway: [],
     }
-].map(p => ({...p, pathway: createPatientPathway(p.id, p.cycleStartDate)}));
+].map(p => ({...p, pathway: createPatientPathway(p.id, p.cycleStartDate)})) : [];
 
 // --- Pre-process mock data to set initial statuses ---
 
@@ -582,7 +526,7 @@ export const getAllPatients = (): Promise<Patient[]> => {
   });
 };
 
-let patientCounter = 8;
+let patientCounter = 1;
 export const createNewPatient = (info: NewPatientOnboardingInfo): Patient => {
     const id = `patient-${String(patientCounter++).padStart(3, '0')}`;
     const pathway = createPatientPathway(id, info.cycleStartDate);

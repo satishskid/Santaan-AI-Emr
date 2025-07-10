@@ -280,3 +280,33 @@ This IVF EMR system is production-ready with:
 
 **Perfect for sales demonstrations, pilot implementations, and full production deployments!**
 - Provider status is displayed in development mode
+
+
+## 🏥 Production Deployment
+
+### Clearing Demo Data
+Before deploying to a real clinic, clear all demo data:
+```bash
+node scripts/clear-demo-data.js
+```
+
+### Environment Setup
+1. Copy `.env.production` to `.env`
+2. Fill in your actual API keys and clinic information
+3. Set `DEMO_MODE=false`
+
+### First-Time Setup
+1. Deploy to Netlify with environment variables
+2. Access the system and go to Configuration panel
+3. Set up your clinic details, staff, and protocols
+4. Create your first real patient record
+5. Train staff on system usage
+
+### Data Storage
+Currently uses frontend-only storage. For production with multiple users:
+- Consider implementing backend database (PostgreSQL recommended)
+- Set up automated backups
+- Implement user authentication system
+- Add audit logging for compliance
+
+See `PRODUCTION_CHECKLIST.md` for complete deployment guide.
