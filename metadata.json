@@ -1,0 +1,7 @@
+
+{
+  "name": "AI-Assisted IVF EMR",
+  "description": "An intuitive, AI-assisted Electronic Medical Record (EMR) system for In Vitro Fertilization (IVF) clinics, designed around the patient's pathway. It provides a clear, swimlane-based view of tasks and progress for all involved medical professionals.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
