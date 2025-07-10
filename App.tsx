@@ -12,9 +12,10 @@ import AccessDenied from './components/AccessDenied';
 import ConfigurationPanel from './components/ConfigurationPanel';
 import TrainingDashboard from './components/TrainingDashboard';
 import WorkflowDemo from './components/WorkflowDemo';
+import VibeCounselingDashboard from './components/VibeCounselingDashboard';
 import { LoadingIcon } from './components/icons';
 
-type AppView = 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow';
+type AppView = 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling';
 
 const App: React.FC = () => {
   const [allPatients, setAllPatients] = useState<Patient[]>([]);
@@ -191,6 +192,9 @@ const App: React.FC = () => {
 
       case 'workflow':
         return <WorkflowDemo currentUserRole={currentUserRole} />;
+
+      case 'counseling':
+        return <VibeCounselingDashboard currentUserRole={currentUserRole} />;
 
       case 'patient':
         return selectedPatient ? (

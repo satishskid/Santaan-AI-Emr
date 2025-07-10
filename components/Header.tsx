@@ -1,14 +1,14 @@
 
 import React from 'react';
-import { DnaIcon, LayoutDashboardIcon, ClipboardListIcon, ChevronLeftIcon, BarChart3Icon, SettingsIcon, BookOpenIcon } from './icons';
+import { DnaIcon, LayoutDashboardIcon, ClipboardListIcon, ChevronLeftIcon, BarChart3Icon, SettingsIcon, BookOpenIcon, ActivityIcon, HeartIcon } from './icons';
 import { UserRole } from '../types';
 import RoleSelector from './RoleSelector';
 
 interface HeaderProps {
   currentUserRole: UserRole;
   onRoleChange: (role: UserRole) => void;
-  activeView: 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow';
-  onNavigate: (view: 'clinic' | 'quality' | 'executive' | 'configuration' | 'training' | 'workflow') => void;
+  activeView: 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling';
+  onNavigate: (view: 'clinic' | 'quality' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling') => void;
   selectedPatientName?: string;
 }
 
@@ -112,6 +112,12 @@ const Header: React.FC<HeaderProps> = ({ currentUserRole, onRoleChange, activeVi
                     <NavButton onClick={() => onNavigate('workflow')} isActive={activeView === 'workflow'}>
                         <ActivityIcon className="h-5 w-5"/>
                         <span>Workflow</span>
+                    </NavButton>
+
+                    {/* Vibe Counseling - Always accessible */}
+                    <NavButton onClick={() => onNavigate('counseling')} isActive={activeView === 'counseling'}>
+                        <HeartIcon className="h-5 w-5"/>
+                        <span>Vibe</span>
                     </NavButton>
 
                     {/* Configuration - Clinic Head level and above */}
