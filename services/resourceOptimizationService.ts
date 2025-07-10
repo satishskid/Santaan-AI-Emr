@@ -435,7 +435,8 @@ export class ResourceOptimizationService {
   private static calculateUtilizationScore(tasks: TaskWithPatientInfo[]): number {
     const totalAvailableHours = 10 * STAFF_RESOURCES.length; // 10 hours per staff member
     const totalScheduledHours = tasks.reduce((sum, task) => sum + task.durationMinutes / 60, 0);
-    return Math.min((totalScheduledHours / totalAvailableHours) * 100, 100);
+    const utilizationPercentage = (totalScheduledHours / totalAvailableHours) * 100;
+    return Math.min(Math.ceil(utilizationPercentage), 100); // Round up to remove decimals
   }
 
   // Calculate workload balance score
@@ -455,7 +456,8 @@ export class ResourceOptimizationService {
     const standardDeviation = Math.sqrt(variance);
     
     // Lower standard deviation = better balance
-    return Math.max(0, 100 - (standardDeviation / average) * 100);
+    const balanceScore = 100 - (standardDeviation / average) * 100;
+    return Math.max(0, Math.round(balanceScore)); // Round to remove decimals
   }
 
   // Generate optimization recommendations
