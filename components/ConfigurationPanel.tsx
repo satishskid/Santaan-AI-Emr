@@ -964,7 +964,8 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
           { id: 'resources', label: 'Resources', icon: UsersIcon },
           { id: 'wellness', label: 'Wellness', icon: ActivityIcon },
           { id: 'notifications', label: 'Notifications', icon: BellIcon },
-          { id: 'analytics', label: 'Analytics', icon: ActivityIcon }
+          { id: 'analytics', label: 'Analytics', icon: ActivityIcon },
+          { id: 'clinics', label: 'Clinics', icon: UsersIcon }
         ].map((tab) => {
           const Icon = tab.icon;
           return (
@@ -991,6 +992,7 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
       {activeTab === 'wellness' && renderWellnessTab()}
       {activeTab === 'notifications' && renderNotificationsTab()}
       {activeTab === 'analytics' && renderAnalyticsTab()}
+      {activeTab === 'clinics' && <ClinicManagement />}
 
       {/* Configuration Summary */}
       <Card variant="elevated" className="p-6">
