@@ -1,13 +1,13 @@
 // Supabase Client Configuration for IVF EMR
 import { createClient, SupabaseClient, User, Session } from '@supabase/supabase-js';
-import { Database } from '../types/supabase';
+// import { Database } from '../types/supabase'; // Commented out for now
 
-// Supabase configuration
-const supabaseUrl = 'https://uzjoolaejhitcwyoarxx.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6am9vbGFlamhpdGN3eW9hcnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyMjUyMTUsImV4cCI6MjA2NzgwMTIxNX0.tnHXzqDbJ9xB0WajNyzKGzbRodMh50wGMgnuUCSahPc';
+// Supabase configuration from environment variables
+const supabaseUrl = import.meta.env.REACT_APP_SUPABASE_URL || 'https://uzjoolaejhitcwyoarxx.supabase.co';
+const supabaseAnonKey = import.meta.env.REACT_APP_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6am9vbGFlamhpdGN3eW9hcnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyMjUyMTUsImV4cCI6MjA2NzgwMTIxNX0.tnHXzqDbJ9xB0WajNyzKGzbRodMh50wGMgnuUCSahPc';
 
 // Create Supabase client
-export const supabase: SupabaseClient<Database> = createClient(supabaseUrl, supabaseAnonKey, {
+export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,

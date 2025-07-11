@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.8.0",
-    "@supabase/supabase-js": "^2.39.0",
+    "@supabase/supabase-js": "^2.50.5",
     "groq-sdk": "^0.8.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
