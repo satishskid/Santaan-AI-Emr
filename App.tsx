@@ -35,7 +35,7 @@ const AppContent: React.FC = () => {
   // Debug logging
   console.log('App render - Auth state:', { isAuthenticated, authLoading, profile });
 
-  // Update user role based on profile
+  // Update user role based on profile - ALWAYS call this hook
   useEffect(() => {
     if (profile?.role) {
       const roleMapping = {
@@ -49,22 +49,7 @@ const AppContent: React.FC = () => {
     }
   }, [profile]);
 
-  // Show login form if not authenticated
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <LoginForm onSuccess={() => {
-      // No need to reload - React will re-render when auth state changes
-      console.log('Login successful!');
-    }} />;
-  }
-
+  // ALWAYS call this useEffect hook to maintain hook order
   useEffect(() => {
     const fetchInitialData = async () => {
       if (!isAuthenticated) return;
@@ -254,6 +239,22 @@ const AppContent: React.FC = () => {
         return null;
     }
   };
+
+  // Handle authentication states AFTER all hooks are called
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <LoginForm onSuccess={() => {
+      // No need to reload - React will re-render when auth state changes
+      console.log('Login successful!');
+    }} />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200 font-sans">
