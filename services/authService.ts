@@ -114,9 +114,9 @@ class AuthService {
   // Subscribe to auth state changes
   subscribe(listener: (state: AuthState) => void) {
     this.listeners.push(listener);
-    // Immediately call with current state
-    listener(this.authState);
-    
+    // Don't immediately call with current state to avoid infinite loops
+    // listener(this.authState);
+
     // Return unsubscribe function
     return () => {
       this.listeners = this.listeners.filter(l => l !== listener);

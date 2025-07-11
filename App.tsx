@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Patient, PatientPathwayStep, UserRole, Task, NewPatientOnboardingInfo } from './types';
 import { getAllPatients, createNewPatient } from './services/ivfDataService';
-import { AuthProvider, useAuth, useAuthStatus } from './contexts/AuthContext';
+// import { AuthProvider, useAuth, useAuthStatus } from './contexts/AuthContext';
+import { SimpleAuthProvider, useSimpleAuthStatus } from './contexts/SimpleAuthContext';
 import LoginForm from './components/auth/LoginForm';
 import Header from './components/Header';
 import PatientPathway from './components/PatientPathway';
@@ -29,7 +30,7 @@ const AppContent: React.FC = () => {
   const [activeView, setActiveView] = useState<AppView>('clinic');
 
   // Get authentication state
-  const { isAuthenticated, isLoading: authLoading, profile } = useAuthStatus();
+  const { isAuthenticated, isLoading: authLoading, profile } = useSimpleAuthStatus();
 
   // Update user role based on profile
   useEffect(() => {
@@ -269,9 +270,9 @@ const AppContent: React.FC = () => {
 // Main App Component with Authentication Provider
 const App: React.FC = () => {
   return (
-    <AuthProvider>
+    <SimpleAuthProvider>
       <AppContent />
-    </AuthProvider>
+    </SimpleAuthProvider>
   );
 };
 

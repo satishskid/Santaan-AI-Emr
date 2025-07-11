@@ -1,6 +1,7 @@
 // Login Form Component for IVF EMR
 import React, { useState } from 'react';
-import { authService } from '../../services/authService';
+// import { authService } from '../../services/authService';
+import { useSimpleAuth } from '../../contexts/SimpleAuthContext';
 
 interface LoginFormProps {
   onSuccess?: () => void;
@@ -15,6 +16,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onError }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const { signIn } = useSimpleAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,16 +24,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onError }) => {
     setError(null);
 
     try {
-      const { user, error: signInError } = await authService.signIn(formData);
-      
-      if (signInError) {
-        setError(signInError.message);
-        onError?.(signInError.message);
-      } else if (user) {
-        onSuccess?.();
-      }
-    } catch (err) {
-      const errorMessage = 'An unexpected error occurred';
+      await signIn(formData.email, formData.password);
+      onSuccess?.();
+    } catch (err: any) {
+      const errorMessage = err.message || 'An unexpected error occurred';
       setError(errorMessage);
       onError?.(errorMessage);
     } finally {
@@ -45,21 +41,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onError }) => {
       return;
     }
 
-    setLoading(true);
-    try {
-      const { error } = await authService.resetPassword(formData.email);
-      if (error) {
-        setError(error.message);
-      } else {
-        setError(null);
-        alert('Password reset email sent! Check your inbox.');
-        setShowForgotPassword(false);
-      }
-    } catch (err) {
-      setError('Failed to send password reset email');
-    } finally {
-      setLoading(false);
-    }
+    // Simplified for demo - just show message
+    alert('Password reset feature will be available in production. For demo, use: admin@democlinic.com / demo123456');
+    setShowForgotPassword(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

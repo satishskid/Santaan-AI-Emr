@@ -37,6 +37,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
 
   useEffect(() => {
+    // Initialize with current auth state
+    const currentState = authService.getAuthState();
+    setAuthState(currentState);
+
     // Subscribe to auth state changes
     const unsubscribe = authService.subscribe((state) => {
       setAuthState(state);
