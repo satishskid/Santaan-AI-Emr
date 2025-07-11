@@ -32,6 +32,9 @@ const AppContent: React.FC = () => {
   // Get authentication state
   const { isAuthenticated, isLoading: authLoading, profile } = useSimpleAuthStatus();
 
+  // Debug logging
+  console.log('App render - Auth state:', { isAuthenticated, authLoading, profile });
+
   // Update user role based on profile
   useEffect(() => {
     if (profile?.role) {
@@ -56,7 +59,10 @@ const AppContent: React.FC = () => {
   }
 
   if (!isAuthenticated) {
-    return <LoginForm onSuccess={() => window.location.reload()} />;
+    return <LoginForm onSuccess={() => {
+      // No need to reload - React will re-render when auth state changes
+      console.log('Login successful!');
+    }} />;
   }
 
   useEffect(() => {

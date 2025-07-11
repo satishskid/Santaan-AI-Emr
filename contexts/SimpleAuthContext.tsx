@@ -28,13 +28,15 @@ export const SimpleAuthProvider: React.FC<SimpleAuthProviderProps> = ({ children
   });
 
   const signIn = async (email: string, password: string) => {
+    console.log('SignIn called with:', email, password);
     // Simple mock authentication for demo
     if (email === 'admin@democlinic.com' && password === 'demo123456') {
-      setAuthState({
+      console.log('Credentials match, setting authenticated state');
+      const newState = {
         isAuthenticated: true,
         user: { id: '1', email },
-        profile: { 
-          role: 'admin', 
+        profile: {
+          role: 'admin',
           full_name: 'Admin User',
           clinic_id: '00000000-0000-0000-0000-000000000001',
           permissions: {
@@ -45,8 +47,11 @@ export const SimpleAuthProvider: React.FC<SimpleAuthProviderProps> = ({ children
           }
         },
         loading: false
-      });
+      };
+      setAuthState(newState);
+      console.log('Auth state updated:', newState);
     } else {
+      console.log('Invalid credentials provided');
       throw new Error('Invalid credentials');
     }
   };
