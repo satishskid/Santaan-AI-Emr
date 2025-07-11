@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserRole } from '../types';
 import { Card, Badge, Button } from './ui/DesignSystem';
+import ClinicManagement from './admin/ClinicManagement';
 import { 
   SettingsIcon, 
   SaveIcon, 
@@ -34,7 +35,7 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
   currentUserRole,
   onConfigurationChange
 }) => {
-  const [activeTab, setActiveTab] = useState<'general' | 'scheduling' | 'resources' | 'wellness' | 'notifications' | 'analytics'>('general');
+  const [activeTab, setActiveTab] = useState<'general' | 'scheduling' | 'resources' | 'wellness' | 'notifications' | 'analytics' | 'clinics'>('general');
   const [configuration, setConfiguration] = useState<ClinicConfiguration>(ConfigurationService.getConfiguration());
   const [hasChanges, setHasChanges] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
