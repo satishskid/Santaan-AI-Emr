@@ -338,7 +338,7 @@ if (meera) {
         culturalConsiderations: 'Gujarati family, vegetarian preferences for medications'
     });
 
-    completeTaskWithData(emily, 'Initial Consultation', 'Patient Onboarding', {
+    completeTaskWithData(meera, 'Initial Consultation', 'Patient Onboarding', {
         protocolExplained: true,
         consentSigned: true,
         patientQuestions: 'Asked about success rates and side effects. All questions answered.'
