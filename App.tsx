@@ -5,6 +5,7 @@ import { getAllPatients, createNewPatient } from './services/ivfDataService';
 // import { AuthProvider, useAuth, useAuthStatus } from './contexts/AuthContext';
 import { SimpleAuthProvider, useSimpleAuthStatus } from './contexts/SimpleAuthContext';
 import LoginForm from './components/auth/LoginForm';
+import { healthMonitor } from './services/healthMonitoringService';
 import Header from './components/Header';
 import PatientPathway from './components/PatientPathway';
 import ClinicDashboard from './components/ClinicDashboard';
@@ -59,6 +60,12 @@ const AppContent: React.FC = () => {
         const data = await getAllPatients();
         setAllPatients(data);
         setError(null);
+
+        // Start health monitoring for authenticated users
+        if (profile?.role === 'admin') {
+          console.log('🔍 Starting health monitoring for admin user');
+          healthMonitor.startMonitoring(15); // Check every 15 minutes
+        }
       } catch (err) {
         setError('Failed to fetch patient data.');
         console.error(err);

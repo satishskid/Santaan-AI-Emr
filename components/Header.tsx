@@ -3,6 +3,7 @@ import React from 'react';
 import { DnaIcon, LayoutDashboardIcon, ClipboardListIcon, ChevronLeftIcon, BarChart3Icon, SettingsIcon, BookOpenIcon, ActivityIcon, HeartIcon } from './icons';
 import { UserRole } from '../types';
 import RoleSelector from './RoleSelector';
+import HealthAlertBadge from './HealthAlertBadge';
 
 interface HeaderProps {
   currentUserRole: UserRole;
@@ -140,6 +141,7 @@ const Header: React.FC<HeaderProps> = ({ currentUserRole, onRoleChange, activeVi
                     <span className="text-blue-600 dark:text-blue-400">{selectedPatientName}</span>
                  </div>
             )}
+            <HealthAlertBadge userRole={currentUserRole} />
              <RoleSelector
                 currentUserRole={currentUserRole}
                 onRoleChange={onRoleChange}

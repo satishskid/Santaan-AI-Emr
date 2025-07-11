@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserRole } from '../types';
 import { Card, Badge, Button } from './ui/DesignSystem';
 import ClinicManagement from './admin/ClinicManagement';
+import SystemHealthMonitor from './admin/SystemHealthMonitor';
 import { 
   SettingsIcon, 
   SaveIcon, 
@@ -35,7 +36,7 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
   currentUserRole,
   onConfigurationChange
 }) => {
-  const [activeTab, setActiveTab] = useState<'general' | 'scheduling' | 'resources' | 'wellness' | 'notifications' | 'analytics' | 'clinics'>('general');
+  const [activeTab, setActiveTab] = useState<'general' | 'scheduling' | 'resources' | 'wellness' | 'notifications' | 'analytics' | 'clinics' | 'health'>('general');
   const [configuration, setConfiguration] = useState<ClinicConfiguration>(ConfigurationService.getConfiguration());
   const [hasChanges, setHasChanges] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
@@ -965,7 +966,8 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
           { id: 'wellness', label: 'Wellness', icon: ActivityIcon },
           { id: 'notifications', label: 'Notifications', icon: BellIcon },
           { id: 'analytics', label: 'Analytics', icon: ActivityIcon },
-          { id: 'clinics', label: 'Clinics', icon: UsersIcon }
+          { id: 'clinics', label: 'Clinics', icon: UsersIcon },
+          { id: 'health', label: 'System Health', icon: ActivityIcon }
         ].map((tab) => {
           const Icon = tab.icon;
           return (
@@ -993,6 +995,7 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
       {activeTab === 'notifications' && renderNotificationsTab()}
       {activeTab === 'analytics' && renderAnalyticsTab()}
       {activeTab === 'clinics' && <ClinicManagement />}
+      {activeTab === 'health' && <SystemHealthMonitor />}
 
       {/* Configuration Summary */}
       <Card variant="elevated" className="p-6">
