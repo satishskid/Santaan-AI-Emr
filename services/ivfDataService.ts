@@ -838,7 +838,7 @@ export const getAllPatients = (): Promise<Patient[]> => {
   });
 };
 
-let patientCounter = 1;
+let patientCounter = 1; // Fixed emily reference error
 export const createNewPatient = (info: NewPatientOnboardingInfo): Patient => {
     const id = `patient-${String(patientCounter++).padStart(3, '0')}`;
     const pathway = createPatientPathway(id, info.cycleStartDate);

@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Patient, PatientPathwayStep, UserRole, Task, NewPatientOnboardingInfo } from './types';
 import { getAllPatients, createNewPatient } from './services/ivfDataService';
+import { AuthProvider, useAuth, useAuthStatus } from './contexts/AuthContext';
+import LoginForm from './components/auth/LoginForm';
 import Header from './components/Header';
 import PatientPathway from './components/PatientPathway';
 import ClinicDashboard from './components/ClinicDashboard';
@@ -17,7 +19,8 @@ import { LoadingIcon } from './components/icons';
 
 type AppView = 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling';
 
-const App: React.FC = () => {
+// Main App Component with Authentication
+const AppContent: React.FC = () => {
   const [allPatients, setAllPatients] = useState<Patient[]>([]);
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -25,12 +28,45 @@ const App: React.FC = () => {
   const [currentUserRole, setCurrentUserRole] = useState<UserRole>(UserRole.Doctor);
   const [activeView, setActiveView] = useState<AppView>('clinic');
 
+  // Get authentication state
+  const { isAuthenticated, isLoading: authLoading, profile } = useAuthStatus();
+
+  // Update user role based on profile
+  useEffect(() => {
+    if (profile?.role) {
+      const roleMapping = {
+        'doctor': UserRole.Doctor,
+        'nurse': UserRole.Nurse,
+        'embryologist': UserRole.Embryologist,
+        'admin': UserRole.Admin,
+        'receptionist': UserRole.Receptionist
+      };
+      setCurrentUserRole(roleMapping[profile.role] || UserRole.Doctor);
+    }
+  }, [profile]);
+
+  // Show login form if not authenticated
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <LoginForm onSuccess={() => window.location.reload()} />;
+  }
+
   useEffect(() => {
     const fetchInitialData = async () => {
+      if (!isAuthenticated) return;
+
       setIsLoading(true);
       try {
         const data = await getAllPatients();
         setAllPatients(data);
+        setError(null);
       } catch (err) {
         setError('Failed to fetch patient data.');
         console.error(err);
@@ -39,7 +75,7 @@ const App: React.FC = () => {
       }
     };
     fetchInitialData();
-  }, []);
+  }, [isAuthenticated]);
 
   const handleUpdatePatientData = (updatedTask: Task, stepId: string, patientId: string) => {
       setAllPatients(prevPatients => 
@@ -227,6 +263,15 @@ const App: React.FC = () => {
         </div>
       </main>
     </div>
+  );
+};
+
+// Main App Component with Authentication Provider
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 
