@@ -87,8 +87,8 @@ GEMINI_API_KEY=your_gemini_api_key_here
 GROQ_API_KEY=your_groq_api_key_here
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 
-# Demo Mode (set to false for production)
-DEMO_MODE=false
+# Demo Mode (set to false for production, true for sales demos)
+DEMO_MODE=true
 
 # Clinic Configuration
 CLINIC_NAME=Your Clinic Name

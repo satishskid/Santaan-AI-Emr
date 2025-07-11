@@ -146,19 +146,79 @@ const createPatientPathway = (patientId: string, cycleStartDate: string): Patien
     }));
 };
 
-// Production mode: Start with empty patient list
-// To enable demo data for testing, set DEMO_MODE=true in environment variables
-const DEMO_MODE = process.env.DEMO_MODE === 'true' || false;
+// Demo mode for sales demonstrations with comprehensive Indian patient data
+// Set DEMO_MODE=true for sales demos, false for production
+const DEMO_MODE = process.env.DEMO_MODE !== 'false'; // Default to true for demos
 
 let allPatients: Patient[] = DEMO_MODE ? [
-    // Demo patient for testing - remove in production
+    // Patient 1: Fresh consultation - showcases initial assessment and AI analysis
     {
-        id: 'demo-patient-001',
-        name: 'Demo Patient',
-        age: 30,
-        partnerName: 'Demo Partner',
+        id: 'patient-001',
+        name: 'Priya Sharma',
+        age: 32,
+        partnerName: 'Rajesh Sharma',
         protocol: 'Antagonist Protocol',
-        cycleStartDate: new Date().toISOString().split('T')[0],
+        cycleStartDate: new Date().toISOString().split('T')[0], // Today
+        pathway: [],
+    },
+    // Patient 2: Mid-stimulation - showcases medication AI and follicle scan AI
+    {
+        id: 'patient-002',
+        name: 'Meera Patel',
+        age: 28,
+        partnerName: 'Arjun Patel',
+        protocol: 'Long Agonist Protocol',
+        cycleStartDate: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 8 days ago
+        pathway: [],
+    },
+    // Patient 3: Ready for retrieval - showcases advanced monitoring
+    {
+        id: 'patient-003',
+        name: 'Lakshmi Reddy',
+        age: 35,
+        partnerName: 'Venkat Reddy',
+        protocol: 'Antagonist Protocol',
+        cycleStartDate: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 12 days ago
+        pathway: [],
+    },
+    // Patient 4: Lab phase - showcases embryology AI features
+    {
+        id: 'patient-004',
+        name: 'Kavya Iyer',
+        age: 30,
+        partnerName: 'Arun Iyer',
+        protocol: 'Antagonist Protocol',
+        cycleStartDate: new Date(Date.now() - 16 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 16 days ago
+        pathway: [],
+    },
+    // Patient 5: Transfer ready - showcases embryo grading AI
+    {
+        id: 'patient-005',
+        name: 'Ananya Gupta',
+        age: 33,
+        partnerName: 'Vikram Gupta',
+        protocol: 'Long Agonist Protocol',
+        cycleStartDate: new Date(Date.now() - 19 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 19 days ago
+        pathway: [],
+    },
+    // Patient 6: Post-transfer - showcases outcome tracking
+    {
+        id: 'patient-006',
+        name: 'Deepika Singh',
+        age: 29,
+        partnerName: 'Rohit Singh',
+        protocol: 'Antagonist Protocol',
+        cycleStartDate: new Date(Date.now() - 26 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 26 days ago
+        pathway: [],
+    },
+    // Patient 7: Success story - showcases positive outcomes and counseling
+    {
+        id: 'patient-007',
+        name: 'Sneha Joshi',
+        age: 31,
+        partnerName: 'Amit Joshi',
+        protocol: 'Long Agonist Protocol',
+        cycleStartDate: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 35 days ago
         pathway: [],
     }
 ].map(p => ({...p, pathway: createPatientPathway(p.id, p.cycleStartDate)})) : [];
@@ -242,20 +302,40 @@ const completeTaskWithData = (patient: Patient, stepName: string, taskTitle: str
     }
 };
 
-// Patient 1 (Sarah Chen): Just starting - no progress yet
-// Keep as is - fresh start
+// COMPREHENSIVE DEMO DATA FOR SALES DEMONSTRATIONS
+// Showcases ALL AI features with realistic Indian patient scenarios
 
-// Patient 2 (Emily Rodriguez): Mid-stimulation - completed consultation, on medications
-const emily = allPatients.find(p => p.id === 'patient-002');
-if (emily) {
-    // Complete Initial Consultation
-    completeTaskWithData(emily, 'Initial Consultation', 'Review Patient History', {
+// Patient 1 (Priya Sharma): Fresh consultation - showcases AI history analysis
+const priya = allPatients.find(p => p.id === 'patient-001');
+if (priya) {
+    // Fresh patient - ready for AI-powered initial assessment
+    // This showcases the AI analysis for new patient onboarding
+}
+
+// Patient 2 (Meera Patel): Mid-stimulation - showcases medication AI and monitoring
+const meera = allPatients.find(p => p.id === 'patient-002');
+if (meera) {
+    // Complete Initial Consultation with comprehensive data
+    completeTaskWithData(meera, 'Initial Consultation', 'Review Patient History', {
         reviewed: 'Yes',
         previousIVFCycles: 0,
-        diagnoses: [{ main: 'Unexplained Infertility' }],
-        allergies: ['Penicillin'],
-        notes: 'First IVF cycle. Patient anxious but well-informed. Normal AMH levels.',
-        identityVerified: true
+        diagnoses: [{ main: 'PCOS', sub: ['Insulin Resistance', 'Irregular Cycles'] }],
+        allergies: ['Sulfa drugs'],
+        notes: 'First IVF cycle. PCOS with good ovarian reserve. AMH: 4.2 ng/mL. Patient from Gujarat, vegetarian diet.',
+        identityVerified: true,
+        medicalHistory: {
+            diabetes: false,
+            hypertension: false,
+            thyroid: 'Subclinical hypothyroidism - on levothyroxine 50mcg',
+            previousSurgeries: 'Laparoscopic ovarian drilling (2022)'
+        }
+    });
+
+    completeTaskWithData(meera, 'Initial Consultation', 'Patient Onboarding', {
+        protocolExplained: true,
+        consentSigned: true,
+        financialCounseling: 'Insurance covers 50%, patient paying ₹1,25,000',
+        culturalConsiderations: 'Gujarati family, vegetarian preferences for medications'
     });
 
     completeTaskWithData(emily, 'Initial Consultation', 'Patient Onboarding', {
@@ -264,223 +344,455 @@ if (emily) {
         patientQuestions: 'Asked about success rates and side effects. All questions answered.'
     });
 
-    // Complete first medication prescription
-    completeTaskWithData(emily, 'Ovarian Stimulation', 'Prescribe Medication', {
+    // AI-powered medication prescription - showcases dosing algorithm
+    completeTaskWithData(meera, 'Ovarian Stimulation', 'Prescribe Medication', {
         medication: 'Gonal-F',
-        dosage: '225 IU',
+        dosage: '150 IU', // Lower dose due to PCOS and high AMH
         frequency: 'Daily',
-        duration: '10 days',
-        explanation: 'Standard dose for patient age and AMH levels. Monitor for OHSS.'
+        duration: '8-10 days',
+        explanation: 'AI-recommended lower starting dose due to PCOS and AMH 4.2. Risk of OHSS - careful monitoring required.',
+        aiRecommendation: {
+            reasoning: 'PCOS patients with AMH >4.0 have 3x higher OHSS risk. Starting with 150 IU reduces risk by 40%.',
+            confidence: 92,
+            alternatives: ['Letrozole + FSH protocol', 'Antagonist with lower dose']
+        }
     });
 
-    // Complete first follicle scan
-    completeTaskWithData(emily, 'Ovarian Stimulation', 'Follicle Scan (Day 6)', {
+    // AI-powered follicle scan analysis - showcases image analysis
+    completeTaskWithData(meera, 'Ovarian Stimulation', 'Follicle Scan (Day 6)', {
         measurements: [
-            { ovary: 'Right', count: 8, sizes: [12, 11, 10, 9, 8, 7, 6, 5] },
-            { ovary: 'Left', count: 6, sizes: [11, 10, 9, 8, 7, 6] }
+            { ovary: 'Right', count: 12, sizes: [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3] },
+            { ovary: 'Left', count: 10, sizes: [13, 12, 11, 10, 9, 8, 7, 6, 5, 4] }
         ],
-        endometrium: { thickness: 7.2, pattern: 'Trilaminar' },
-        notes: 'Good response to stimulation. Continue current dose.',
-        isVerified: true
+        endometrium: { thickness: 8.1, pattern: 'Trilaminar' },
+        notes: 'Excellent response - 22 follicles total. AI suggests reducing dose to prevent OHSS.',
+        isVerified: true,
+        aiAnalysis: {
+            follicleCount: 22,
+            leadFollicles: 6,
+            ohssRisk: 'Moderate-High',
+            recommendation: 'Reduce Gonal-F to 112.5 IU, add Cetrotide from Day 7',
+            confidence: 89
+        }
+    });
+
+    // Psychological assessment with AI insights
+    completeTaskWithData(meera, 'Initial Consultation', 'Psychological Assessment', {
+        clinicalNeeds: 'Anxiety about OHSS risk, cultural pressure from family',
+        emotionalNeeds: 'Support for managing expectations, stress reduction techniques',
+        financialNeeds: 'Concerned about additional costs if cycle cancelled',
+        aiPersona: 'Anxious Perfectionist with Cultural Pressure',
+        interventionPlan: 'CBT + Cultural counseling + Family education session',
+        culturalConsiderations: 'Joint family system, religious considerations for treatment timing'
     });
 }
 
-// Patient 3 (Maria Patel): Ready for egg retrieval - completed stimulation
-const maria = allPatients.find(p => p.id === 'patient-003');
-if (maria) {
-    // Complete all consultation and stimulation tasks
-    completeTaskWithData(maria, 'Initial Consultation', 'Review Patient History', {
+// Patient 3 (Lakshmi Reddy): Ready for egg retrieval - showcases advanced monitoring
+const lakshmi = allPatients.find(p => p.id === 'patient-003');
+if (lakshmi) {
+    // Complete comprehensive consultation
+    completeTaskWithData(lakshmi, 'Initial Consultation', 'Review Patient History', {
         reviewed: 'Yes',
         previousIVFCycles: 1,
-        diagnoses: [{ main: 'Diminished Ovarian Reserve', sub: ['Advanced Maternal Age'] }],
-        notes: 'Previous cycle cancelled due to poor response. Increased stimulation protocol.',
-        identityVerified: true
+        diagnoses: [{ main: 'Diminished Ovarian Reserve', sub: ['Advanced Maternal Age', 'Low AMH'] }],
+        notes: 'Previous cycle: 4 eggs retrieved, 2 fertilized, 1 transferred - BFN. AMH: 1.1 ng/mL. From Hyderabad.',
+        identityVerified: true,
+        medicalHistory: {
+            diabetes: false,
+            hypertension: 'Controlled on Amlodipine 5mg',
+            thyroid: 'Normal',
+            previousSurgeries: 'Appendectomy (2015)'
+        }
     });
 
-    completeTaskWithData(maria, 'Initial Consultation', 'Patient Onboarding', {
+    completeTaskWithData(lakshmi, 'Initial Consultation', 'Patient Onboarding', {
         protocolExplained: true,
-        consentSigned: true
+        consentSigned: true,
+        financialCounseling: 'Self-funded - ₹2,50,000 budget',
+        culturalConsiderations: 'Telugu family, traditional values, husband very supportive'
     });
 
-    completeTaskWithData(maria, 'Ovarian Stimulation', 'Prescribe Medication', {
-        medication: 'Menopur',
-        dosage: '300 IU',
+    // High-dose protocol with AI optimization for poor responder
+    completeTaskWithData(lakshmi, 'Ovarian Stimulation', 'Prescribe Medication', {
+        medication: 'Gonal-F + Menopur',
+        dosage: '300 IU + 150 IU',
         frequency: 'Daily',
         duration: '12 days',
-        explanation: 'High dose protocol due to previous poor response and age.'
+        explanation: 'AI-optimized high dose protocol for DOR. Menopur added for LH activity to improve egg quality.',
+        aiRecommendation: {
+            reasoning: 'Previous cycle analysis shows better response to dual stimulation. 23% higher maturation rate with Menopur.',
+            confidence: 87,
+            expectedOutcome: '6-8 follicles, 4-5 mature eggs'
+        }
     });
 
-    // Complete all follicle scans
-    completeTaskWithData(maria, 'Ovarian Stimulation', 'Follicle Scan (Day 6)', {
+    // AI-powered follicle monitoring with detailed analysis
+    completeTaskWithData(lakshmi, 'Ovarian Stimulation', 'Follicle Scan (Day 6)', {
         measurements: [
-            { ovary: 'Right', count: 4, sizes: [14, 12, 10, 8] },
-            { ovary: 'Left', count: 3, sizes: [13, 11, 9] }
+            { ovary: 'Right', count: 4, sizes: [11, 10, 9, 8] },
+            { ovary: 'Left', count: 3, sizes: [10, 9, 8] }
         ],
-        endometrium: { thickness: 6.8, pattern: 'Trilaminar' },
-        notes: 'Slower response than expected. Continue current dose.',
-        isVerified: true
+        endometrium: { thickness: 7.2, pattern: 'Trilaminar' },
+        notes: 'Better response than previous cycle. AI predicts good outcome.',
+        isVerified: true,
+        aiAnalysis: {
+            follicleCount: 7,
+            growthRate: 'Optimal for DOR',
+            prediction: '5-6 mature eggs expected',
+            confidence: 84
+        }
     });
 
-    completeTaskWithData(maria, 'Ovarian Stimulation', 'Follicle Scan (Day 10)', {
+    completeTaskWithData(lakshmi, 'Ovarian Stimulation', 'Follicle Scan (Day 10)', {
         measurements: [
-            { ovary: 'Right', count: 4, sizes: [18, 17, 16, 14] },
-            { ovary: 'Left', count: 3, sizes: [17, 16, 15] }
+            { ovary: 'Right', count: 4, sizes: [17, 16, 15, 14] },
+            { ovary: 'Left', count: 3, sizes: [16, 15, 14] }
         ],
         endometrium: { thickness: 9.1, pattern: 'Trilaminar' },
-        notes: 'Good final response. Ready for trigger. Schedule OPU.',
-        isVerified: true
+        notes: 'Excellent response! Ready for trigger. AI confirms optimal timing.',
+        isVerified: true,
+        aiAnalysis: {
+            triggerRecommendation: 'Trigger tonight - optimal maturation window',
+            expectedMatureEggs: 6,
+            retrievalTiming: '36 hours post-trigger'
+        }
     });
 
-    completeTaskWithData(maria, 'Ovarian Stimulation', 'Psychological Assessment', {
-        clinicalNeeds: 'Patient expressing anxiety about cycle outcome due to previous cancellation.',
-        emotionalNeeds: 'Needs reassurance and support. Partner very supportive.',
-        financialNeeds: 'Concerned about costs if cycle fails again.',
-        persona: 'The Cautious Optimist - experienced but hopeful despite previous setback.',
-        interventionPlan: '- Provide regular updates during cycle\n- Schedule check-in call post-retrieval\n- Discuss backup plans if needed',
+    // Psychological assessment with cultural considerations
+    completeTaskWithData(lakshmi, 'Ovarian Stimulation', 'Psychological Assessment', {
+        clinicalNeeds: 'Anxiety about age-related risks, previous cycle failure trauma',
+        emotionalNeeds: 'Support for managing expectations, grief processing from previous BFN',
+        financialNeeds: 'Financial stress - using savings for second attempt',
+        aiPersona: 'Experienced Veteran with Realistic Expectations',
+        interventionPlan: 'Grief counseling + Expectation management + Partner support sessions',
+        culturalConsiderations: 'Telugu family traditions, religious prayers for success',
         assessmentComplete: true
     });
 }
 
-// Patient 4 (Jennifer Thompson): Post-fertilization, awaiting Day 3 check
-const jennifer = allPatients.find(p => p.id === 'patient-004');
-if (jennifer) {
-    // Complete consultation, stimulation, and egg retrieval
-    completeTaskWithData(jennifer, 'Initial Consultation', 'Review Patient History', {
+// Patient 4 (Kavya Iyer): Lab phase - showcases embryology AI features
+const kavya = allPatients.find(p => p.id === 'patient-004');
+if (kavya) {
+    // Complete consultation and stimulation phases
+    completeTaskWithData(kavya, 'Initial Consultation', 'Review Patient History', {
         reviewed: 'Yes',
         previousIVFCycles: 0,
-        diagnoses: [{ main: 'Male Factor Infertility', sub: ['Oligospermia'] }],
-        notes: 'Partner has low sperm count. ICSI recommended.',
-        identityVerified: true
-    });
-
-    completeTaskWithData(jennifer, 'Initial Consultation', 'Patient Onboarding', {
-        protocolExplained: true,
-        consentSigned: true
-    });
-
-    // Complete egg retrieval with good results
-    completeTaskWithData(jennifer, 'Egg Retrieval', 'Identify & Count Oocytes', {
-        totalOocytes: 12,
-        matureOocytes: 10,
-        notes: 'Excellent retrieval. 10 mature eggs suitable for ICSI.',
-        isVerified: true
-    });
-
-    // Complete fertilization
-    completeTaskWithData(jennifer, 'Fertilization', 'Sperm Analysis', {
-        sampleId: 'SP-2024-0722-001',
-        count: 8.5,
-        motility: 25,
-        morphology: 3,
-        notes: 'Low parameters confirmed. ICSI performed on all mature oocytes.',
-        isVerified: true,
-        aiAssessment: {
-            assessment: 'Oligoasthenoteratozoospermia (OAT)',
-            recommendation: 'ICSI is strongly recommended due to low count, motility, and morphology.'
+        diagnoses: [{ main: 'Male Factor Infertility', sub: ['Severe Oligoasthenospermia'] }],
+        notes: 'Husband has severe sperm issues. ICSI mandatory. From Chennai, both software engineers.',
+        identityVerified: true,
+        medicalHistory: {
+            diabetes: false,
+            hypertension: false,
+            thyroid: 'Normal',
+            previousSurgeries: 'None'
         }
     });
 
-    completeTaskWithData(jennifer, 'Fertilization', 'Perform Fertilization (ICSI)', {
-        fertilizationMethod: 'ICSI',
-        oocytesInseminated: 10,
-        notes: 'ICSI performed on all 10 mature oocytes due to male factor.'
+    completeTaskWithData(kavya, 'Initial Consultation', 'Patient Onboarding', {
+        protocolExplained: true,
+        consentSigned: true,
+        financialCounseling: 'Corporate insurance covers 80% - ₹50,000 out of pocket',
+        culturalConsiderations: 'South Indian Tamil family, both highly educated, analytical approach to treatment'
     });
 
-    completeTaskWithData(jennifer, 'Fertilization', 'Post-Fertilization Check (Day 1)', {
-        normalFertilization: 8,
+    // AI-powered sperm analysis showcasing WHO 2021 standards
+    completeTaskWithData(kavya, 'Fertilization', 'Sperm Analysis', {
+        sampleId: 'SP-2024-0722-004',
+        count: 2.1, // Severe oligospermia
+        motility: 15, // Asthenospermia
+        morphology: 2, // Teratospermia
+        volume: 3.2,
+        ph: 7.8,
+        notes: 'Severe oligoasthenoteratospermia. ICSI mandatory.',
+        isVerified: true,
+        aiAnalysis: {
+            who2021Classification: 'Severe OAT syndrome',
+            icsiRecommendation: 'Mandatory - conventional IVF not viable',
+            spermSelection: 'IMSI recommended for optimal sperm selection',
+            fertilizationRate: 'Expected 70-80% with ICSI',
+            confidence: 94
+        }
+    });
+
+    // Excellent egg retrieval showcasing oocyte AI analysis
+    completeTaskWithData(kavya, 'Egg Retrieval', 'Identify & Count Oocytes', {
+        totalOocytes: 15,
+        matureOocytes: 13,
+        notes: 'Excellent retrieval! 13 mature MII oocytes. AI confirms optimal quality.',
+        isVerified: true,
+        aiAnalysis: {
+            maturityAssessment: 'Excellent - 87% maturation rate',
+            qualityGrading: '11 Grade A, 2 Grade B oocytes',
+            icsiSuitability: 'All 13 suitable for ICSI',
+            expectedFertilization: '9-11 embryos predicted'
+        }
+    });
+    // AI-powered ICSI procedure with detailed tracking
+    completeTaskWithData(kavya, 'Fertilization', 'Perform Fertilization (ICSI)', {
+        fertilizationMethod: 'ICSI',
+        oocytesInseminated: 13,
+        notes: 'ICSI performed on all 13 mature oocytes. AI-guided sperm selection used.',
+        aiGuidance: {
+            spermSelectionMethod: 'AI-enhanced morphology assessment',
+            injectionSuccess: '100% - all oocytes survived injection',
+            technicalNotes: 'Optimal sperm selected using AI pattern recognition'
+        }
+    });
+
+    // Excellent fertilization results showcasing AI prediction accuracy
+    completeTaskWithData(kavya, 'Fertilization', 'Post-Fertilization Check (Day 1)', {
+        normalFertilization: 11,
         abnormalFertilization: 1,
         unfertilized: 1,
-        notes: '8 normally fertilized embryos (2PN). Good fertilization rate of 80%.'
+        notes: '11 normally fertilized embryos (2PN). Excellent 85% fertilization rate!',
+        aiAnalysis: {
+            fertilizationRate: '85% - exceeds predicted 70-80%',
+            embryoQuality: 'High quality 2PN embryos observed',
+            developmentPrediction: '8-9 blastocysts expected by Day 5'
+        }
+    });
+
+    // AI-powered embryo development tracking
+    completeTaskWithData(kavya, 'Embryo Culture', 'Day 3 Check', {
+        embryos: [
+            { id: 'embryo-1', cellCount: 8, grade: 'A', fragmentation: 5, aiScore: 9.2 },
+            { id: 'embryo-2', cellCount: 8, grade: 'A', fragmentation: 8, aiScore: 8.9 },
+            { id: 'embryo-3', cellCount: 7, grade: 'A', fragmentation: 10, aiScore: 8.5 },
+            { id: 'embryo-4', cellCount: 8, grade: 'A', fragmentation: 5, aiScore: 9.1 },
+            { id: 'embryo-5', cellCount: 6, grade: 'B', fragmentation: 15, aiScore: 7.8 },
+            { id: 'embryo-6', cellCount: 7, grade: 'A', fragmentation: 12, aiScore: 8.2 },
+            { id: 'embryo-7', cellCount: 8, grade: 'A', fragmentation: 8, aiScore: 8.7 },
+            { id: 'embryo-8', cellCount: 6, grade: 'B', fragmentation: 20, aiScore: 7.2 }
+        ],
+        notes: '8 embryos developing well. AI predicts 6 will reach blastocyst stage.',
+        aiAnalysis: {
+            topEmbryos: ['embryo-1', 'embryo-4', 'embryo-2'],
+            blastocystPrediction: '6 embryos likely to reach Day 5',
+            transferRecommendation: 'Single embryo transfer recommended - excellent quality'
+        }
     });
 }
 
-// Patient 5 (Lisa Kim): Ready for embryo transfer
-const lisa = allPatients.find(p => p.id === 'patient-005');
-if (lisa) {
-    // Complete all previous steps and embryo culture
-    completeTaskWithData(lisa, 'Initial Consultation', 'Review Patient History', {
+// Patient 5 (Ananya Gupta): Transfer ready - showcases embryo grading AI
+const ananya = allPatients.find(p => p.id === 'patient-005');
+if (ananya) {
+    // Complete consultation with comprehensive history
+    completeTaskWithData(ananya, 'Initial Consultation', 'Review Patient History', {
         reviewed: 'Yes',
         previousIVFCycles: 0,
-        diagnoses: [{ main: 'Endometriosis', sub: ['Stage III'] }],
-        notes: 'Laparoscopy performed 6 months ago. Good ovarian reserve.',
-        identityVerified: true
+        diagnoses: [{ main: 'Endometriosis', sub: ['Stage III', 'Bilateral Endometriomas'] }],
+        notes: 'Laparoscopy 8 months ago. Endometriomas removed. AMH: 2.8 ng/mL. From Delhi, working in finance.',
+        identityVerified: true,
+        medicalHistory: {
+            diabetes: false,
+            hypertension: false,
+            thyroid: 'Subclinical hypothyroidism - on 25mcg levothyroxine',
+            previousSurgeries: 'Laparoscopic cystectomy for endometriomas (2023)'
+        }
     });
 
-    completeTaskWithData(lisa, 'Embryo Culture', 'Day 3 Check', {
+    // AI-powered embryo development tracking with detailed analysis
+    completeTaskWithData(ananya, 'Embryo Culture', 'Day 3 Check', {
         embryos: [
-            { id: 'embryo-1', cellCount: 8, grade: 'A', fragmentation: 5 },
-            { id: 'embryo-2', cellCount: 7, grade: 'A', fragmentation: 10 },
-            { id: 'embryo-3', cellCount: 6, grade: 'B', fragmentation: 15 },
-            { id: 'embryo-4', cellCount: 8, grade: 'A', fragmentation: 5 },
-            { id: 'embryo-5', cellCount: 5, grade: 'C', fragmentation: 25 }
+            { id: 'embryo-1', cellCount: 8, grade: 'A', fragmentation: 5, aiScore: 9.4 },
+            { id: 'embryo-2', cellCount: 8, grade: 'A', fragmentation: 8, aiScore: 9.1 },
+            { id: 'embryo-3', cellCount: 7, grade: 'A', fragmentation: 12, aiScore: 8.6 },
+            { id: 'embryo-4', cellCount: 8, grade: 'A', fragmentation: 6, aiScore: 9.0 },
+            { id: 'embryo-5', cellCount: 6, grade: 'B', fragmentation: 18, aiScore: 7.5 },
+            { id: 'embryo-6', cellCount: 7, grade: 'A', fragmentation: 10, aiScore: 8.3 }
         ],
-        notes: '4 good quality embryos continuing to Day 5. 1 poor quality embryo arrested.',
-        isVerified: true
+        notes: '6 embryos developing excellently. AI predicts 5 will reach high-quality blastocyst stage.',
+        isVerified: true,
+        aiAnalysis: {
+            developmentRate: 'Excellent - 100% on track',
+            qualityPrediction: '5 top-grade blastocysts expected',
+            transferRecommendation: 'Single embryo transfer - multiple excellent options'
+        }
     });
 
-    completeTaskWithData(lisa, 'Embryo Culture', 'Day 5 Check & Grading', {
+    // AI-powered blastocyst grading showcasing advanced image analysis
+    completeTaskWithData(ananya, 'Embryo Culture', 'Day 5 Check & Grading', {
         embryos: [
             {
                 id: 'embryo-1',
-                grade: '4AA',
+                grade: '5AA',
                 pgtStatus: 'Untested',
-                notes: 'Excellent quality blastocyst. Top choice for transfer.'
+                notes: 'Hatching blastocyst - exceptional quality. AI confidence: 96%',
+                aiGrading: {
+                    expansion: 5,
+                    icm: 'A',
+                    trophectoderm: 'A',
+                    aiConfidence: 96,
+                    implantationPotential: 'Very High (65-70%)',
+                    morphokinetics: 'Optimal timing patterns'
+                }
             },
             {
                 id: 'embryo-2',
-                grade: '3AB',
+                grade: '4AA',
                 pgtStatus: 'Untested',
-                notes: 'Good quality blastocyst. Suitable for transfer or freezing.'
+                notes: 'Excellent expanded blastocyst. AI confidence: 94%',
+                aiGrading: {
+                    expansion: 4,
+                    icm: 'A',
+                    trophectoderm: 'A',
+                    aiConfidence: 94,
+                    implantationPotential: 'High (60-65%)',
+                    morphokinetics: 'Excellent development'
+                }
             },
             {
-                id: 'embryo-4',
-                grade: '4BB',
+                grade: '4AB',
                 pgtStatus: 'Untested',
-                notes: 'Good quality blastocyst. Will be frozen.'
+                notes: 'Very good blastocyst. AI confidence: 89%',
+                aiGrading: {
+                    expansion: 4,
+                    icm: 'A',
+                    trophectoderm: 'B',
+                    aiConfidence: 89,
+                    implantationPotential: 'Good (50-55%)',
+                    morphokinetics: 'Good development pattern'
+                }
+            },
+            {
+                id: 'embryo-3',
+                grade: '3AB',
+                pgtStatus: 'Untested',
+                notes: 'Good quality blastocyst for freezing. AI confidence: 85%',
+                aiGrading: {
+                    expansion: 3,
+                    icm: 'A',
+                    trophectoderm: 'B',
+                    aiConfidence: 85,
+                    implantationPotential: 'Moderate (45-50%)',
+                    morphokinetics: 'Slightly delayed but good quality'
+                }
             }
-        ]
+        ],
+        notes: '5 excellent blastocysts! AI recommends single embryo transfer with embryo-1.',
+        aiAnalysis: {
+            transferRecommendation: 'Embryo-1 (5AA) - highest implantation potential',
+            freezingPlan: '4 embryos for cryopreservation',
+            successPrediction: '68% live birth rate with selected embryo'
+        }
+    });
+
+    // AI-powered transfer planning
+    completeTaskWithData(ananya, 'Embryo Transfer', 'Transfer Planning', {
+        selectedEmbryo: 'embryo-1',
+        embryoGrade: '5AA',
+        transferDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        endometrialPreparation: 'Natural cycle - optimal thickness 10.2mm',
+        notes: 'AI-selected best embryo. Patient counseled on excellent prognosis.',
+        aiGuidance: {
+            optimalTiming: 'Day 5 post-ovulation confirmed',
+            implantationWindow: 'Perfect - receptivity markers positive',
+            successPrediction: '68% live birth probability'
+        }
     });
 }
 
-// Patient 6 (Amanda Johnson): Awaiting pregnancy test
-const amanda = allPatients.find(p => p.id === 'patient-006');
-if (amanda) {
-    // Complete all steps up to transfer
-    completeTaskWithData(amanda, 'Initial Consultation', 'Review Patient History', {
+// Patient 6 (Deepika Singh): Post-transfer - showcases outcome tracking
+const deepika = allPatients.find(p => p.id === 'patient-006');
+if (deepika) {
+    // Complete consultation with detailed history
+    completeTaskWithData(deepika, 'Initial Consultation', 'Review Patient History', {
         reviewed: 'Yes',
         previousIVFCycles: 0,
-        diagnoses: [{ main: 'PCOS' }],
-        notes: 'Well-controlled PCOS. Good prognosis.',
-        identityVerified: true
+        diagnoses: [{ main: 'PCOS', sub: ['Insulin Resistance', 'Obesity'] }],
+        notes: 'PCOS with BMI 32. On metformin. Good response expected. From Mumbai, works in marketing.',
+        identityVerified: true,
+        medicalHistory: {
+            diabetes: 'Pre-diabetic - on metformin 500mg BD',
+            hypertension: false,
+            thyroid: 'Normal',
+            previousSurgeries: 'None'
+        }
     });
 
-    completeTaskWithData(amanda, 'Embryo Transfer', 'Embryo Transfer Procedure', {
+    // AI-guided transfer procedure
+    completeTaskWithData(deepika, 'Embryo Transfer', 'Embryo Transfer Procedure', {
         embryosTransferred: 1,
-        embryoGrades: ['5AA'],
+        embryoGrades: ['4AA'],
         transferDifficulty: 'Easy',
         catheterType: 'Soft',
-        notes: 'Single excellent quality blastocyst transferred. Smooth procedure.',
-        isVerified: true
+        notes: 'Single excellent blastocyst transferred. AI-optimized timing. Smooth procedure.',
+        isVerified: true,
+        aiGuidance: {
+            transferTiming: 'Optimal - Day 5 post-ovulation',
+            embryoSelection: 'AI-selected best quality embryo',
+            implantationPrediction: '62% success probability'
+        }
+    });
+
+    // Post-transfer monitoring with AI insights
+    completeTaskWithData(deepika, 'Post-Transfer Care', 'Post-Transfer Instructions', {
+        medicationsGiven: ['Progesterone 400mg BD', 'Folic acid 5mg', 'Aspirin 75mg'],
+        restrictions: 'Normal activity, avoid heavy lifting, no bed rest required',
+        followUpDate: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        notes: 'Patient counseled on symptoms to watch for. AI predicts good outcome.',
+        aiMonitoring: {
+            riskFactors: 'Low risk - excellent embryo quality',
+            symptomPrediction: 'Mild cramping expected Days 6-8',
+            successIndicators: 'Monitor for implantation bleeding Day 7-10'
+        }
     });
 }
 
-// Patient 7 (Rachel Williams): Successful pregnancy (completed cycle)
-const rachel = allPatients.find(p => p.id === 'patient-007');
-if (rachel) {
-    // Complete entire cycle with positive result
-    completeTaskWithData(rachel, 'Initial Consultation', 'Review Patient History', {
+// Patient 7 (Sneha Joshi): Success story - showcases positive outcomes and counseling
+const sneha = allPatients.find(p => p.id === 'patient-007');
+if (sneha) {
+    // Complete consultation with comprehensive history
+    completeTaskWithData(sneha, 'Initial Consultation', 'Review Patient History', {
         reviewed: 'Yes',
         previousIVFCycles: 0,
-        diagnoses: [{ main: 'Tubal Factor Infertility' }],
-        notes: 'Bilateral tubal blockage. IVF indicated.',
-        identityVerified: true
+        diagnoses: [{ main: 'Tubal Factor Infertility', sub: ['Bilateral Hydrosalpinx'] }],
+        notes: 'Bilateral tubal damage from PID. Tubes removed laparoscopically. Excellent prognosis. From Pune, teacher.',
+        identityVerified: true,
+        medicalHistory: {
+            diabetes: false,
+            hypertension: false,
+            thyroid: 'Normal',
+            previousSurgeries: 'Bilateral salpingectomy for hydrosalpinx (2023)'
+        }
     });
 
-    completeTaskWithData(rachel, 'Pregnancy Test', 'hCG Blood Test', {
-        hcgValue: 156,
-        testDate: '2024-07-09',
-        interpretation: 'Positive, consistent with a viable pregnancy.',
-        isVerified: true
+    // AI-powered hCG interpretation showcasing positive outcome
+    completeTaskWithData(sneha, 'Pregnancy Test', 'hCG Blood Test', {
+        hcgValue: 342,
+        testDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        interpretation: 'POSITIVE! Strong hCG level indicating healthy pregnancy.',
+        isVerified: true,
+        aiAnalysis: {
+            pregnancyViability: 'Excellent - hCG level indicates strong implantation',
+            twinPrediction: 'Single pregnancy likely (hCG range normal for singleton)',
+            nextSteps: 'Repeat hCG in 48 hours, scan at 6-7 weeks',
+            riskAssessment: 'Low risk - excellent early indicators'
+        }
+    });
+
+    // Comprehensive psychological support showcasing counseling success
+    completeTaskWithData(sneha, 'Post-Transfer Care', 'Psychological Support', {
+        clinicalNeeds: 'Anxiety about early pregnancy symptoms, fear of miscarriage',
+        emotionalNeeds: 'Celebration support, managing excitement vs. caution',
+        culturalNeeds: 'Family announcement timing, religious gratitude practices',
+        aiPersona: 'Cautiously Optimistic Success Story',
+        interventionPlan: 'Early pregnancy support + Family counseling + Celebration guidance',
+        culturalConsiderations: 'Marathi traditions for pregnancy announcements, religious ceremonies',
+        outcomeNotes: 'Patient extremely grateful for AI-guided treatment success'
+    });
+
+    // Follow-up hCG showing excellent progression
+    completeTaskWithData(sneha, 'Pregnancy Test', 'Follow-up hCG', {
+        hcgValue: 687,
+        testDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        interpretation: 'Excellent doubling! Pregnancy progressing perfectly.',
+        isVerified: true,
+        aiAnalysis: {
+            doublingTime: '48 hours - perfect progression',
+            pregnancyViability: 'Excellent - 95% chance of ongoing pregnancy',
+            scanRecommendation: 'Transvaginal scan at 6 weeks to confirm fetal heartbeat'
+        }
     });
 }
 
