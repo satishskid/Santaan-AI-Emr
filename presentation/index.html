@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santaan AI EMR - Complete IVF Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .presentation {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .slide.title-slide {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .slide.title-slide h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .slide.title-slide .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .slide.title-slide .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #3b82f6;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+        
+        .content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid #3b82f6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .card h3 {
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .pricing-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .pricing-card.featured {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3b82f6;
+            margin: 1rem 0;
+        }
+        
+        .pricing-card.featured .price {
+            color: white;
+        }
+        
+        .demo-section {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+        
+        .demo-button {
+            display: inline-block;
+            background: white;
+            color: #059669;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .navigation {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin: 0.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .nav-button:hover {
+            background: #1e40af;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+            
+            .slide.title-slide h1 {
+                font-size: 2.5rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <button class="nav-button" onclick="scrollToSlide(0)">Title</button>
+        <button class="nav-button" onclick="scrollToSlide(1)">Overview</button>
+        <button class="nav-button" onclick="scrollToSlide(2)">Problem</button>
+        <button class="nav-button" onclick="scrollToSlide(3)">Solution</button>
+        <button class="nav-button" onclick="scrollToSlide(4)">Monitoring</button>
+        <button class="nav-button" onclick="scrollToSlide(5)">Pricing</button>
+        <button class="nav-button" onclick="scrollToSlide(6)">ROI</button>
+        <button class="nav-button" onclick="scrollToSlide(7)">Demo</button>
+    </div>
+
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide" id="slide-0">
+            <h1>🏥 Santaan AI EMR</h1>
+            <div class="subtitle">Complete IVF Electronic Medical Records System<br>Advanced Healthcare Technology for Modern Fertility Clinics</div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h3>🏥 Multi-clinic Management</h3>
+                    <p>Scale from 1 to 100+ clinics seamlessly</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🤖 AI-Powered Optimization</h3>
+                    <p>Intelligent treatment recommendations</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔍 Real-time Health Monitoring</h3>
+                    <p>Proactive system monitoring & alerts</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Enterprise Scalability</h3>
+                    <p>Unlimited growth potential</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; font-size: 1.3rem;">
+                <strong>Demo:</strong> santaanaimr.netlify.app
+            </div>
+        </div>
+
+        <!-- Slide 2: Executive Summary -->
+        <div class="slide" id="slide-1">
+            <h1>🎯 Complete Healthcare Solution</h1>
+            
+            <div class="highlight">
+                <h2>What is Santaan AI EMR?</h2>
+                <p>A comprehensive, cloud-based Electronic Medical Records system specifically designed for IVF and fertility clinics with advanced AI capabilities and enterprise-grade monitoring.</p>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>🏥 Complete IVF Workflow Management</h3>
+                    <p>From consultation to pregnancy - complete patient lifecycle tracking</p>
+                </div>
+                <div class="card">
+                    <h3>🤖 AI-Powered Treatment Optimization</h3>
+                    <p>Intelligent recommendations and success prediction algorithms</p>
+                </div>
+                <div class="card">
+                    <h3>🏢 Multi-Clinic Scalability</h3>
+                    <p>Support for 1 to 100+ clinic networks with centralized management</p>
+                </div>
+                <div class="card">
+                    <h3>🔍 Proactive System Monitoring</h3>
+                    <p>Zero downtime guarantee with automated health monitoring</p>
+                </div>
+                <div class="card">
+                    <h3>🔒 Regulatory Compliance</h3>
+                    <p>HIPAA, ART Act 2021, DPDP Act 2023 compliant</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Market Problem -->
+        <div class="slide" id="slide-2">
+            <h1>🚨 Current Healthcare Technology Challenges</h1>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>📋 Manual Record Keeping</h3>
+                    <ul>
+                        <li>Paper-based systems</li>
+                        <li>Error-prone processes</li>
+                        <li>Lost documentation</li>
+                        <li>Compliance issues</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🔄 Fragmented Workflows</h3>
+                    <ul>
+                        <li>Multiple disconnected systems</li>
+                        <li>Data silos</li>
+                        <li>Inefficient communication</li>
+                        <li>Duplicate data entry</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📊 Limited Analytics</h3>
+                    <ul>
+                        <li>No data-driven insights</li>
+                        <li>Poor success tracking</li>
+                        <li>Limited reporting</li>
+                        <li>No predictive capabilities</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>⚠️ System Failures</h3>
+                    <ul>
+                        <li>Unexpected downtime</li>
+                        <li>Data loss risks</li>
+                        <li>No scaling capability</li>
+                        <li>High maintenance costs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h2>💰 Financial Impact</h2>
+                <p><strong>Lost revenue</strong> from system downtime • <strong>Compliance penalties</strong> from poor record keeping • <strong>Inefficient operations</strong> from manual processes • <strong>Limited growth</strong> due to technology constraints</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Our Solution -->
+        <div class="slide" id="slide-3">
+            <h1>🚀 Santaan AI EMR - Complete Solution</h1>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>🏥 Clinical Management</h3>
+                    <ul>
+                        <li>Complete patient lifecycle tracking</li>
+                        <li>Treatment protocol management</li>
+                        <li>Laboratory integration</li>
+                        <li>Quality metrics dashboard</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🤖 AI-Powered Intelligence</h3>
+                    <ul>
+                        <li>Treatment success prediction</li>
+                        <li>Personalized protocol recommendations</li>
+                        <li>Risk assessment algorithms</li>
+                        <li>Outcome optimization</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📊 Business Intelligence</h3>
+                    <ul>
+                        <li>Real-time analytics dashboard</li>
+                        <li>KPI tracking and reporting</li>
+                        <li>Resource optimization</li>
+                        <li>Financial performance metrics</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🔍 System Health Monitoring</h3>
+                    <ul>
+                        <li>Proactive limit monitoring</li>
+                        <li>Automated scaling alerts</li>
+                        <li>Zero-downtime guarantee</li>
+                        <li>Predictable cost management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: System Health Monitoring -->
+        <div class="slide" id="slide-4">
+            <h1>🔍 Proactive System Monitoring</h1>
+            
+            <div class="highlight">
+                <h2>Never Hit Limits Unexpectedly Again!</h2>
+                <p>Our advanced monitoring system tracks your usage and alerts you BEFORE you reach capacity limits, ensuring uninterrupted service for your growing clinic network.</p>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>📊 Real-Time Health Tracking</h3>
+                    <ul>
+                        <li>Database usage monitoring</li>
+                        <li>Active user tracking</li>
+                        <li>Performance metrics</li>
+                        <li>Error detection</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🚨 Automated Alerts</h3>
+                    <ul>
+                        <li>Warning at 70% of limits</li>
+                        <li>Critical at 90% of limits</li>
+                        <li>Visual dashboard indicators</li>
+                        <li>Email notifications</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📈 Capacity Planning</h3>
+                    <ul>
+                        <li>Growth trend analysis</li>
+                        <li>Upgrade recommendations</li>
+                        <li>Cost-benefit analysis</li>
+                        <li>Scaling strategy</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>💰 Cost Optimization</h3>
+                    <ul>
+                        <li>Right-sized infrastructure</li>
+                        <li>Predictable scaling costs</li>
+                        <li>No surprise overages</li>
+                        <li>ROI optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Pricing & Scaling -->
+        <div class="slide" id="slide-5">
+            <h1>💰 Transparent, Scalable Pricing</h1>
+            
+            <div class="pricing">
+                <div class="pricing-card">
+                    <h3>🆓 Free Tier</h3>
+                    <div class="price">$0<span style="font-size: 1rem;">/month</span></div>
+                    <ul>
+                        <li>5-10 clinics</li>
+                        <li>10,000 patients</li>
+                        <li>50k monthly users</li>
+                        <li>500MB database</li>
+                        <li>Basic support</li>
+                    </ul>
+                    <p><strong>Perfect for:</strong> Startup clinics</p>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>💼 Pro Tier</h3>
+                    <div class="price">$44<span style="font-size: 1rem;">/month</span></div>
+                    <ul>
+                        <li>50+ clinics</li>
+                        <li>160,000 patients</li>
+                        <li>100k monthly users</li>
+                        <li>8GB database</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <p><strong>Perfect for:</strong> Growing networks</p>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>🏢 Enterprise</h3>
+                    <div class="price">Custom</div>
+                    <ul>
+                        <li>Unlimited clinics</li>
+                        <li>Unlimited patients</li>
+                        <li>Unlimited users</li>
+                        <li>Unlimited storage</li>
+                        <li>Dedicated support</li>
+                    </ul>
+                    <p><strong>Perfect for:</strong> Large networks</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h2>🎯 Capacity Planning Made Simple</h2>
+                <p><strong>~7,000 patients</strong> → Warning threshold (plan upgrade)<br>
+                <strong>~9,000 patients</strong> → Critical threshold (upgrade immediately)<br>
+                <strong>~10,000 patients</strong> → Maximum free tier capacity</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: ROI & Business Benefits -->
+        <div class="slide" id="slide-6">
+            <h1>📈 Measurable Business Impact</h1>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>⚡ Operational Efficiency</h3>
+                    <ul>
+                        <li><strong>50% reduction</strong> in administrative time</li>
+                        <li><strong>30% faster</strong> patient processing</li>
+                        <li><strong>90% elimination</strong> of paper records</li>
+                        <li><strong>24/7 access</strong> to patient data</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎯 Quality Improvements</h3>
+                    <ul>
+                        <li><strong>25% increase</strong> in treatment success rates</li>
+                        <li><strong>60% reduction</strong> in medical errors</li>
+                        <li><strong>100% compliance</strong> with regulations</li>
+                        <li><strong>Real-time quality</strong> monitoring</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>💰 Financial Benefits</h3>
+                    <ul>
+                        <li><strong>20% revenue increase</strong> from efficiency gains</li>
+                        <li><strong>40% cost reduction</strong> in administrative overhead</li>
+                        <li><strong>Zero downtime</strong> costs from system failures</li>
+                        <li><strong>Predictable scaling</strong> costs</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🚀 Growth Enablement</h3>
+                    <ul>
+                        <li><strong>Unlimited clinic</strong> expansion capability</li>
+                        <li><strong>Standardized operations</strong> across locations</li>
+                        <li><strong>Data-driven decisions</strong> for growth</li>
+                        <li><strong>Competitive advantage</strong> in market</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h2>💡 ROI Timeline</h2>
+                <p><strong>Month 1-3:</strong> Setup & Training<br>
+                <strong>Month 4-6:</strong> Efficiency gains realized<br>
+                <strong>Month 7-12:</strong> Full ROI achieved<br>
+                <strong>Year 2+:</strong> Exponential growth enabled</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Demo & Next Steps -->
+        <div class="slide" id="slide-7">
+            <h1>🚀 Experience Santaan AI EMR</h1>
+            
+            <div class="demo-section">
+                <h2>🎯 Live Demo Available Now!</h2>
+                <p>Explore the complete system with realistic clinic data</p>
+                
+                <a href="https://santaanaimr.netlify.app" class="demo-button" target="_blank">
+                    🌐 Open Live Demo
+                </a>
+                
+                <div style="margin-top: 2rem; font-size: 1.1rem;">
+                    <strong>Demo Credentials:</strong><br>
+                    Email: admin@democlinic.com<br>
+                    Password: demo123456
+                </div>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>✅ What You Can Explore</h3>
+                    <ul>
+                        <li>Patient Management - Complete EMR functionality</li>
+                        <li>Treatment Tracking - IVF workflow management</li>
+                        <li>AI Recommendations - Intelligent suggestions</li>
+                        <li>Multi-Clinic Setup - Scalability demonstration</li>
+                        <li>Health Monitoring - System status dashboard</li>
+                        <li>Analytics & Reporting - Business intelligence</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎯 Next Steps</h3>
+                    <ul>
+                        <li><strong>1. Explore Demo</strong> - Test all features</li>
+                        <li><strong>2. Schedule Consultation</strong> - Discuss requirements</li>
+                        <li><strong>3. Pilot Program</strong> - Trial implementation</li>
+                        <li><strong>4. Full Deployment</strong> - Production rollout</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h2>🏥 Transform Your Clinic Today</h2>
+                <p><strong>Start Free → Scale Predictably → Grow Unlimited</strong></p>
+                <p>Join the future of IVF healthcare technology!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function scrollToSlide(slideNumber) {
+            const slide = document.getElementById(`slide-${slideNumber}`);
+            slide.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Add smooth scrolling for better presentation experience
+        document.addEventListener('keydown', function(e) {
+            const slides = document.querySelectorAll('.slide');
+            const currentSlide = Math.floor(window.scrollY / window.innerHeight);
+            
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    scrollToSlide(currentSlide + 1);
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    scrollToSlide(currentSlide - 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
