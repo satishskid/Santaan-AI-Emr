@@ -7,6 +7,7 @@ import {
     FertilizationPrepData, FertilizationData, PostFertilizationCheckData,
     EmbryoLabPrepData, TransferPrepData, TransferPostCareData, NewPatientOnboardingInfo, Day3EmbryoDetails
 } from '../types';
+import { generateTestPatients } from './testClinicService';
 
 const getRelativeDate = (startDate: string | Date, daysToAdd: number, time: string = '09:00'): string => {
     const date = new Date(startDate);
@@ -211,7 +212,12 @@ const createPatientPathway = (patientId: string, cycleStartDate: string): Patien
 // Set DEMO_MODE=true for sales demos, false for production
 const DEMO_MODE = process.env.DEMO_MODE !== 'false'; // Default to true for demos
 
+// Generate comprehensive test clinic patients
+const testClinicPatients = generateTestPatients();
+
 let allPatients: Patient[] = DEMO_MODE ? [
+    // Include test clinic patients first
+    ...testClinicPatients,
     // Patient 1: Fresh consultation - showcases initial assessment and AI analysis
     {
         id: 'patient-001',

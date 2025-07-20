@@ -8,8 +8,8 @@ import HealthAlertBadge from './HealthAlertBadge';
 interface HeaderProps {
   currentUserRole: UserRole;
   onRoleChange: (role: UserRole) => void;
-  activeView: 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling';
-  onNavigate: (view: 'clinic' | 'quality' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling') => void;
+  activeView: 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling' | 'test-clinic';
+  onNavigate: (view: 'clinic' | 'quality' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling' | 'test-clinic') => void;
   selectedPatientName?: string;
 }
 
@@ -119,6 +119,15 @@ const Header: React.FC<HeaderProps> = ({ currentUserRole, onRoleChange, activeVi
                     <NavButton onClick={() => onNavigate('counseling')} isActive={activeView === 'counseling'}>
                         <HeartIcon className="h-5 w-5"/>
                         <span>Vibe</span>
+                    </NavButton>
+
+                    {/* Test Clinic - Always accessible for demo */}
+                    <NavButton onClick={() => onNavigate('test-clinic')} isActive={activeView === 'test-clinic'}>
+                        <div className="h-5 w-5 flex items-center justify-center text-lg">🏥</div>
+                        <span>Demo</span>
+                        <span className="ml-1 px-1.5 py-0.5 text-xs bg-emerald-100 text-emerald-700 rounded-full">
+                            Test
+                        </span>
                     </NavButton>
 
                     {/* Configuration - Clinic Head level and above */}

@@ -17,9 +17,10 @@ import ConfigurationPanel from './components/ConfigurationPanel';
 import TrainingDashboard from './components/TrainingDashboard';
 import WorkflowDemo from './components/WorkflowDemo';
 import VibeCounselingDashboard from './components/VibeCounselingDashboard';
+import TestClinicDashboard from './components/TestClinicDashboard';
 import { LoadingIcon } from './components/icons';
 
-type AppView = 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling';
+type AppView = 'clinic' | 'quality' | 'patient' | 'executive' | 'configuration' | 'training' | 'workflow' | 'counseling' | 'test-clinic';
 
 // Main App Component with Authentication
 const AppContent: React.FC = () => {
@@ -230,6 +231,24 @@ const AppContent: React.FC = () => {
 
       case 'counseling':
         return <VibeCounselingDashboard currentUserRole={currentUserRole} />;
+
+      case 'test-clinic':
+        return (
+          <TestClinicDashboard
+            onSelectPatient={(patientId) => {
+              // Find and select the patient
+              const patient = allPatients.find(p => p.name === patientId);
+              if (patient) {
+                setSelectedPatientId(patient.id);
+                setActiveView('patient');
+              }
+            }}
+            onSwitchUser={(userId, role) => {
+              setCurrentUserRole(role);
+              console.log(`Switched to user: ${userId} with role: ${role}`);
+            }}
+          />
+        );
 
       case 'patient':
         return selectedPatient ? (
