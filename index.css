@@ -4,4 +4,23 @@
 
 body {
   overscroll-behavior-x: none;
+  font-size: 16px; /* Increased base font size for better readability */
+  line-height: 1.6; /* Optimized line height for healthcare professionals */
+  background-color: #fefefe; /* Soft cream background for reduced eye strain */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced focus indicators for accessibility */
+*:focus {
+  outline: 2px solid #0891b2 !important;
+  outline-offset: 2px !important;
+}
+
+/* Stress-reducing color variables */
+:root {
+  --color-primary-calm: #0891b2;
+  --color-success-sage: #10b981;
+  --color-background-warm: #fefefe;
+  --color-gray-soft: #f8fafc;
 }

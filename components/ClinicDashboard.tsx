@@ -206,44 +206,44 @@ const ClinicDashboard: React.FC<ClinicDashboardProps> = ({ patients, onSelectPat
     }, [filteredTasks]);
 
     return (
-        <div className="max-w-7xl mx-auto p-6 space-y-6">
+        <div className="max-w-7xl mx-auto p-8 space-y-8">
             {/* Welcome Banner */}
             <WelcomeBanner currentRole={currentUserRole} />
 
-            {/* Modern Header with Controls */}
-            <Card variant="elevated" className="p-6">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-                    <div className="flex items-center space-x-4">
+            {/* Modern Header with Controls - Enhanced Visual Hierarchy */}
+            <Card variant="calm" className="p-8 border-l-4 border-l-cyan-500">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-6 lg:space-y-0">
+                    <div className="flex items-center space-x-6">
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Clinic Operations</h1>
-                            <p className="text-gray-600 dark:text-gray-400 text-sm">
+                            <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Clinic Operations</h1>
+                            <p className="text-gray-600 dark:text-gray-400 text-base mt-2">
                                 {selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                             </p>
                         </div>
                         <DataQualityIndicator patients={patients} showDetails={false} />
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-3">
-                        {/* Search */}
+                    <div className="flex flex-wrap items-center gap-4">
+                        {/* Search - Enhanced with better sizing */}
                         <div className="relative">
-                            <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                            <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                             <input
                                 type="text"
                                 placeholder="Search tasks or patients..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-base focus:ring-2 focus:ring-cyan-500 focus:border-transparent shadow-sm min-w-64"
                             />
                         </div>
 
-                        {/* Date Picker */}
+                        {/* Date Picker - Enhanced with better sizing */}
                         <div className="relative">
-                            <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                            <CalendarIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                             <input
                                 type="date"
                                 value={selectedDate.toISOString().split('T')[0]}
                                 onChange={handleDateChange}
-                                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-base focus:ring-2 focus:ring-cyan-500 focus:border-transparent shadow-sm"
                             />
                         </div>
 

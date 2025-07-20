@@ -20,11 +20,11 @@ const NavButton: React.FC<{
 }> = ({ onClick, isActive, children }) => (
     <button
         onClick={onClick}
-        className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActive 
-            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-200' 
-            : 'text-slate-600 hover:bg-slate-200/70 dark:text-slate-300 dark:hover:bg-slate-700/50'
-        }`}
+        className={`flex items-center space-x-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+            isActive
+            ? 'bg-cyan-50 text-cyan-700 border border-cyan-200 shadow-sm dark:bg-cyan-900/50 dark:text-cyan-200'
+            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-700 dark:text-slate-300 dark:hover:bg-slate-700/50'
+        } focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50`}
     >
         {children}
     </button>
@@ -51,17 +51,17 @@ const Header: React.FC<HeaderProps> = ({ currentUserRole, onRoleChange, activeVi
   const canAccessExecutive = hasPrivilegedAccess(currentUserRole, 4); // Clinic Head level and above
 
   return (
-    <header className="bg-white dark:bg-slate-800 shadow-md sticky top-0 z-30">
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-white dark:bg-slate-800 shadow-sm border-b border-slate-100 dark:border-slate-700 sticky top-0 z-50">
+      <div className="max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             <div className="flex items-center">
-                <DnaIcon className="h-8 w-8 text-blue-500" />
-                <span className="ml-3 text-xl font-semibold text-slate-900 dark:text-white hidden sm:inline">
-                IVF-EMR
+                <DnaIcon className="h-8 w-8 text-cyan-600" />
+                <span className="ml-3 text-xl font-bold text-slate-900 dark:text-white hidden sm:inline tracking-tight">
+                Santaan AI EMR
                 </span>
             </div>
-             <div className="h-8 border-l border-slate-300 dark:border-slate-600" />
+             <div className="h-8 border-l border-slate-200 dark:border-slate-600" />
 
              {activeView === 'patient' ? (
                  <button
