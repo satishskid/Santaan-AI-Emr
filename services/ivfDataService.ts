@@ -1,7 +1,7 @@
 
-import { 
-    Patient, PatientPathwayStep, UserRole, TaskStatus, Task, PatientHistoryData, MedicationData, 
-    FollicleScanData, EmbryoGradingData, SpermAnalysisData, PsychologicalAssessmentData, PatientOnboardingData, 
+import {
+    Patient, PatientPathwayStep, UserRole, TaskStatus, Task, PatientHistoryData, FertilityHistoryTaskData, MedicationData,
+    FollicleScanData, EmbryoGradingData, SpermAnalysisData, PsychologicalAssessmentData, PatientOnboardingData,
     HcgData, OocyteIdentificationData, Day3CheckData, EmbryoTransferData,
     OpuPrepData, OpuData, OpuPostOpData,
     FertilizationPrepData, FertilizationData, PostFertilizationCheckData,
@@ -29,26 +29,40 @@ const generateTasksForStep = (stepId: string, stepName: string, patientId: strin
 
     switch(stepName) {
         case 'Initial Consultation':
-            tasks.push({ 
-                id: `${baseId}-doc-1`, 
-                title: 'Review Patient History', 
-                description: 'Review prior medical records, previous cycles, and lab results.', 
-                assignedTo: UserRole.Doctor, 
-                status: TaskStatus.Pending, 
+            tasks.push({
+                id: `${baseId}-doc-1`,
+                title: 'Review Patient History',
+                description: 'Review prior medical records, previous cycles, and lab results.',
+                assignedTo: UserRole.Doctor,
+                status: TaskStatus.Pending,
                 data: {
                     reviewed: 'No',
                     identityVerified: false
-                } as PatientHistoryData, 
+                } as PatientHistoryData,
                 dueDate: getRelativeDate(patientStartDate, 0, '09:00'),
                 durationMinutes: 45,
                 resourceRequired: null,
             });
-            tasks.push({ 
-                id: `${baseId}-nurse-1`, 
-                title: 'Patient Onboarding', 
-                description: 'Explain protocol and obtain consents.', 
-                assignedTo: UserRole.Nurse, 
-                status: TaskStatus.Pending, 
+            tasks.push({
+                id: `${baseId}-doc-2`,
+                title: 'Fertility History Assessment',
+                description: 'Complete comprehensive fertility history taking form for both partners.',
+                assignedTo: UserRole.Doctor,
+                status: TaskStatus.Pending,
+                data: {
+                    formStatus: 'draft',
+                    completionPercentage: 0
+                } as FertilityHistoryTaskData,
+                dueDate: getRelativeDate(patientStartDate, 0, '10:30'),
+                durationMinutes: 90,
+                resourceRequired: null,
+            });
+            tasks.push({
+                id: `${baseId}-nurse-1`,
+                title: 'Patient Onboarding',
+                description: 'Explain protocol and obtain consents.',
+                assignedTo: UserRole.Nurse,
+                status: TaskStatus.Pending,
                 data: {
                     consentForm: {
                         title: 'Consent for In Vitro Fertilization (IVF) Cycle',
@@ -58,27 +72,59 @@ const generateTasksForStep = (stepId: string, stepName: string, patientId: strin
                             { question: 'What are the side effects of the medication?', answer: 'Common side effects include bloating, mood swings, and injection site reactions.' },
                         ],
                     }
-                } as PatientOnboardingData, 
-                dueDate: getRelativeDate(patientStartDate, 0, '10:00'),
+                } as PatientOnboardingData,
+                dueDate: getRelativeDate(patientStartDate, 0, '12:00'),
                 durationMinutes: 60,
                 resourceRequired: null,
             });
-            tasks.push({ 
-                id: `${baseId}-counselor-1`, 
-                title: 'Psychological Assessment', 
-                description: 'Assess patient and partner readiness and stress levels.', 
-                assignedTo: UserRole.Counselor, 
-                status: TaskStatus.Pending, 
-                data: {} as PsychologicalAssessmentData, 
+            tasks.push({
+                id: `${baseId}-counselor-1`,
+                title: 'Psychological Assessment',
+                description: 'Assess patient and partner readiness and stress levels.',
+                assignedTo: UserRole.Counselor,
+                status: TaskStatus.Pending,
+                data: {} as PsychologicalAssessmentData,
                 dueDate: getRelativeDate(patientStartDate, 0, '11:00'),
                 durationMinutes: 50,
                 resourceRequired: null,
             });
+            // Add comprehensive IUI option for some patients
+            if (Math.random() > 0.7) { // 30% chance for IUI procedure
+                tasks.push({
+                    id: `${baseId}-iui-1`,
+                    title: 'IUI Procedure',
+                    description: 'Comprehensive Intrauterine Insemination procedure with full documentation.',
+                    assignedTo: UserRole.Doctor,
+                    status: TaskStatus.Pending,
+                    data: {
+                        procedure_type: 'iui',
+                        procedure_status: 'scheduled'
+                    },
+                    dueDate: getRelativeDate(patientStartDate, 1, '10:00'),
+                    durationMinutes: 90,
+                    resourceRequired: 'OT',
+                });
+            }
             break;
         case 'Ovarian Stimulation':
             tasks.push({ id: `${baseId}-doc-1`, title: 'Prescribe Medication', description: 'Prescribe stimulation medication based on protocol.', assignedTo: UserRole.Doctor, status: TaskStatus.Pending, data: {} as MedicationData, dueDate: getRelativeDate(patientStartDate, 0, '12:00'), durationMinutes: 20, resourceRequired: null });
             tasks.push({ id: `${baseId}-nurse-1`, title: 'Follicle Scan #1', description: 'Perform ultrasound to measure follicle growth.', assignedTo: UserRole.Nurse, status: TaskStatus.Pending, data: {} as FollicleScanData, dueDate: getRelativeDate(patientStartDate, 3, '14:00'), durationMinutes: 30, resourceRequired: 'Lab' });
             tasks.push({ id: `${baseId}-nurse-2`, title: 'Follicle Scan #2', description: 'Perform ultrasound to measure follicle growth.', assignedTo: UserRole.Nurse, status: TaskStatus.Pending, data: {} as FollicleScanData, dueDate: getRelativeDate(patientStartDate, 6, '14:00'), durationMinutes: 30, resourceRequired: 'Lab' });
+            // Add comprehensive counselling session
+            tasks.push({
+                id: `${baseId}-counselling-1`,
+                title: 'Counselling Session',
+                description: 'Comprehensive patient counselling with stress management and emotional support.',
+                assignedTo: UserRole.Counselor,
+                status: TaskStatus.Pending,
+                data: {
+                    session_type: 'comprehensive',
+                    stress_level: 'moderate'
+                },
+                dueDate: getRelativeDate(patientStartDate, 2, '15:00'),
+                durationMinutes: 60,
+                resourceRequired: null,
+            });
             break;
         case 'Egg Retrieval':
             const opuDateTime = getRelativeDate(patientStartDate, 7, '09:00');
@@ -106,6 +152,21 @@ const generateTasksForStep = (stepId: string, stepName: string, patientId: strin
         case 'Embryo Culture':
             tasks.push({ id: `${baseId}-embryo-d3`, title: 'Day 3 Check', description: 'Assess embryo development.', assignedTo: UserRole.Embryologist, status: TaskStatus.Pending, data: {} as Day3CheckData, dueDate: getRelativeDate(patientStartDate, 10, '09:00'), durationMinutes: 60, resourceRequired: 'Lab' });
             tasks.push({ id: `${baseId}-embryo-d5`, title: 'Day 5 Check & Grading', description: 'Assess blastocyst quality and grade.', assignedTo: UserRole.Embryologist, status: TaskStatus.Pending, data: {} as EmbryoGradingData, dueDate: getRelativeDate(patientStartDate, 12, '10:00'), durationMinutes: 75, resourceRequired: 'Lab' });
+            // Add comprehensive Lab KPI review
+            tasks.push({
+                id: `${baseId}-lab-kpi-1`,
+                title: 'IVF Lab KPI Review',
+                description: 'Comprehensive laboratory quality metrics and KPI analysis.',
+                assignedTo: UserRole.Embryologist,
+                status: TaskStatus.Pending,
+                data: {
+                    review_type: 'comprehensive',
+                    metrics_period: 'monthly'
+                },
+                dueDate: getRelativeDate(patientStartDate, 11, '16:00'),
+                durationMinutes: 45,
+                resourceRequired: 'Lab',
+            });
             break;
         case 'Embryo Transfer':
              const transferDateTime = getRelativeDate(patientStartDate, 12, '14:00');
