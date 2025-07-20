@@ -10,7 +10,7 @@ interface AddPatientModalProps {
 }
 
 export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSave }) => {
-  const [currentStep, setCurrentStep] = useState<'basic' | 'comprehensive'>('basic');
+  const [currentStep, setCurrentStep] = useState<'selection' | 'quick' | 'comprehensive'>('selection');
   const [patientInfo, setPatientInfo] = useState<Partial<NewPatientOnboardingInfo>>({
     protocol: 'Antagonist Protocol',
     historyData: {
@@ -89,12 +89,12 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSav
   };
 
   // Handle step selection
-  const handleStepSelection = (step: 'basic' | 'comprehensive') => {
+  const handleStepSelection = (step: 'selection' | 'quick' | 'comprehensive') => {
     setCurrentStep(step);
   };
 
   // Render step selection
-  if (currentStep === 'basic') {
+  if (currentStep === 'selection') {
     return (
       <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4 animate-fade-in-fast" onClick={onClose}>
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-4xl" onClick={e => e.stopPropagation()}>
@@ -112,7 +112,7 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSav
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Quick Registration */}
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 p-6 rounded-xl border border-blue-200 dark:border-slate-600 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                   onClick={() => setCurrentStep('comprehensive')}>
+                   onClick={() => setCurrentStep('quick')}>
                 <div className="text-center">
                   <div className="text-4xl mb-4">⚡</div>
                   <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-2">Quick Registration</h4>
@@ -133,7 +133,7 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSav
 
               {/* Comprehensive Registration */}
               <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-700 dark:to-slate-600 p-6 rounded-xl border border-emerald-200 dark:border-slate-600 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                   onClick={() => alert('Comprehensive form integration coming soon! Please use Quick Registration for now.')}>
+                   onClick={() => setCurrentStep('comprehensive')}>
                 <div className="text-center">
                   <div className="text-4xl mb-4">📋</div>
                   <h4 className="text-xl font-bold text-emerald-900 dark:text-emerald-100 mb-2">Comprehensive Registration</h4>
@@ -164,6 +164,78 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSav
     );
   }
 
+  // Handle comprehensive registration
+  if (currentStep === 'comprehensive') {
+    return (
+      <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4 animate-fade-in-fast" onClick={onClose}>
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-6xl" onClick={e => e.stopPropagation()}>
+          <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <button
+                type="button"
+                onClick={() => setCurrentStep('selection')}
+                className="text-cyan-600 hover:text-cyan-800 text-sm font-medium px-3 py-1 rounded-lg hover:bg-cyan-100 transition-colors"
+              >
+                ← Back to Options
+              </button>
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Comprehensive Patient Registration</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Complete fertility history and medical assessment</p>
+              </div>
+            </div>
+            <button type="button" onClick={onClose} title="Close" className="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">
+              <CloseIcon className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="p-8">
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-700 dark:to-slate-600 p-8 rounded-xl border border-emerald-200">
+              <div className="text-center">
+                <div className="text-6xl mb-6">🚧</div>
+                <h4 className="text-2xl font-bold text-emerald-900 dark:text-emerald-100 mb-4">Comprehensive Form Integration</h4>
+                <p className="text-emerald-700 dark:text-emerald-300 mb-6 max-w-2xl mx-auto">
+                  The comprehensive fertility history form with multi-step workflow is being integrated.
+                  This will include detailed medical history, clinical workup, investigation results, and treatment planning.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-emerald-600 dark:text-emerald-400 mb-6">
+                  <div className="space-y-2">
+                    <h5 className="font-semibold">Will Include:</h5>
+                    <ul className="space-y-1">
+                      <li>• 8-step comprehensive workflow</li>
+                      <li>• Female & male partner history</li>
+                      <li>• Clinical workup documentation</li>
+                      <li>• Investigation results tracking</li>
+                    </ul>
+                  </div>
+                  <div className="space-y-2">
+                    <h5 className="font-semibold">Features:</h5>
+                    <ul className="space-y-1">
+                      <li>• Auto-save functionality</li>
+                      <li>• Real-time validation</li>
+                      <li>• Progress tracking</li>
+                      <li>• AI-powered insights</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <button
+                    onClick={() => setCurrentStep('quick')}
+                    className="w-full bg-emerald-600 text-white py-3 px-6 rounded-lg hover:bg-emerald-700 transition-colors font-medium"
+                  >
+                    Use Quick Registration for Now
+                  </button>
+                  <p className="text-xs text-emerald-600 dark:text-emerald-400">
+                    💡 You can always add comprehensive history details later through the patient's task workflow
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4 animate-fade-in-fast" onClick={onClose}>
       <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-4xl" onClick={e => e.stopPropagation()}>
@@ -172,7 +244,7 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSav
             <div className="flex items-center space-x-4">
               <button
                 type="button"
-                onClick={() => setCurrentStep('basic')}
+                onClick={() => setCurrentStep('selection')}
                 className="text-cyan-600 hover:text-cyan-800 text-sm font-medium px-3 py-1 rounded-lg hover:bg-cyan-100 transition-colors"
               >
                 ← Back to Options
