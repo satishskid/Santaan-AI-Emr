@@ -10,6 +10,7 @@ interface AddPatientModalProps {
 }
 
 export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSave }) => {
+  const [currentStep, setCurrentStep] = useState<'basic' | 'comprehensive'>('basic');
   const [patientInfo, setPatientInfo] = useState<Partial<NewPatientOnboardingInfo>>({
     protocol: 'Antagonist Protocol',
     historyData: {
@@ -87,12 +88,100 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSav
     }
   };
 
+  // Handle step selection
+  const handleStepSelection = (step: 'basic' | 'comprehensive') => {
+    setCurrentStep(step);
+  };
+
+  // Render step selection
+  if (currentStep === 'basic') {
+    return (
+      <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4 animate-fade-in-fast" onClick={onClose}>
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-4xl" onClick={e => e.stopPropagation()}>
+          <div className="p-8 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+            <div>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Add New Patient</h3>
+              <p className="text-slate-600 dark:text-slate-400 mt-1">Choose registration method</p>
+            </div>
+            <button type="button" onClick={onClose} title="Close" className="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">
+              <CloseIcon className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Quick Registration */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 p-6 rounded-xl border border-blue-200 dark:border-slate-600 hover:shadow-lg transition-all duration-200 cursor-pointer"
+                   onClick={() => setCurrentStep('comprehensive')}>
+                <div className="text-center">
+                  <div className="text-4xl mb-4">⚡</div>
+                  <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-2">Quick Registration</h4>
+                  <p className="text-blue-700 dark:text-blue-300 text-sm mb-4">
+                    Basic patient information with essential details. Complete comprehensive history later.
+                  </p>
+                  <div className="text-xs text-blue-600 dark:text-blue-400 space-y-1">
+                    <div>• Patient demographics</div>
+                    <div>• Protocol selection</div>
+                    <div>• Basic medical history</div>
+                    <div>• Identity verification</div>
+                  </div>
+                  <button className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                    Quick Registration
+                  </button>
+                </div>
+              </div>
+
+              {/* Comprehensive Registration */}
+              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-700 dark:to-slate-600 p-6 rounded-xl border border-emerald-200 dark:border-slate-600 hover:shadow-lg transition-all duration-200 cursor-pointer"
+                   onClick={() => alert('Comprehensive form integration coming soon! Please use Quick Registration for now.')}>
+                <div className="text-center">
+                  <div className="text-4xl mb-4">📋</div>
+                  <h4 className="text-xl font-bold text-emerald-900 dark:text-emerald-100 mb-2">Comprehensive Registration</h4>
+                  <p className="text-emerald-700 dark:text-emerald-300 text-sm mb-4">
+                    Complete fertility history assessment with detailed medical workup and treatment planning.
+                  </p>
+                  <div className="text-xs text-emerald-600 dark:text-emerald-400 space-y-1">
+                    <div>• Complete fertility history</div>
+                    <div>• Clinical workup details</div>
+                    <div>• Investigation results</div>
+                    <div>• Treatment planning</div>
+                  </div>
+                  <button className="mt-4 w-full bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors font-medium">
+                    Comprehensive Registration
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 text-center">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                💡 <strong>Tip:</strong> You can always add comprehensive history details later through the patient's task workflow.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4 animate-fade-in-fast" onClick={onClose}>
-      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-3xl" onClick={e => e.stopPropagation()}>
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-4xl" onClick={e => e.stopPropagation()}>
         <form onSubmit={handleSubmit}>
           <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white">Add New Patient & Review History</h3>
+            <div className="flex items-center space-x-4">
+              <button
+                type="button"
+                onClick={() => setCurrentStep('basic')}
+                className="text-cyan-600 hover:text-cyan-800 text-sm font-medium px-3 py-1 rounded-lg hover:bg-cyan-100 transition-colors"
+              >
+                ← Back to Options
+              </button>
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Quick Patient Registration</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Essential information for immediate patient setup</p>
+              </div>
+            </div>
             <button type="button" onClick={onClose} title="Close" className="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">
               <CloseIcon className="h-5 w-5" />
             </button>
@@ -102,18 +191,42 @@ export const AddPatientModal: React.FC<AddPatientModalProps> = ({ onClose, onSav
             {/* Patient Info */}
             <fieldset>
                 <legend className="text-md font-semibold text-slate-800 dark:text-slate-100">Patient Information</legend>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                     <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Full Name</label>
-                        <input type="text" name="name" id="name" required onChange={handleInfoChange} className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-slate-700" />
+                        <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Full Name *</label>
+                        <input type="text" name="name" id="name" required onChange={handleInfoChange}
+                               className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                               placeholder="Enter patient's full name" />
                     </div>
                     <div>
-                        <label htmlFor="age" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Age</label>
-                        <input type="number" name="age" id="age" required onChange={handleInfoChange} className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-slate-700" />
+                        <label htmlFor="age" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Age *</label>
+                        <input type="number" name="age" id="age" required onChange={handleInfoChange}
+                               className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                               placeholder="Age in years" min="18" max="50" />
                     </div>
                     <div>
-                        <label htmlFor="partnerName" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Partner's Name (Optional)</label>
-                        <input type="text" name="partnerName" id="partnerName" onChange={handleInfoChange} className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-slate-700" />
+                        <label htmlFor="partnerName" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Partner's Name</label>
+                        <input type="text" name="partnerName" id="partnerName" onChange={handleInfoChange}
+                               className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                               placeholder="Partner's full name (optional)" />
+                    </div>
+                    <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Phone Number</label>
+                        <input type="tel" name="phone" id="phone" onChange={handleInfoChange}
+                               className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                               placeholder="+91 98765 43210" />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
+                        <input type="email" name="email" id="email" onChange={handleInfoChange}
+                               className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                               placeholder="patient@email.com" />
+                    </div>
+                    <div>
+                        <label htmlFor="referredBy" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Referred By</label>
+                        <input type="text" name="referredBy" id="referredBy" onChange={handleInfoChange}
+                               className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                               placeholder="Dr. Name / Self / Other" />
                     </div>
                  </div>
             </fieldset>

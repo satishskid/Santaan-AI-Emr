@@ -9,9 +9,31 @@ interface WelcomeBannerProps {
 }
 
 const WelcomeBanner: React.FC<WelcomeBannerProps> = ({ currentRole, onDismiss }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false); // Collapsed by default
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  if (!isVisible) return null;
+  if (!isVisible) {
+    // Show minimal collapsed banner
+    return (
+      <div className="bg-gradient-to-r from-cyan-50 to-emerald-50 border border-cyan-200 rounded-xl p-3 mb-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="text-2xl">{getRoleFeatures(currentRole).emoji}</div>
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900">Welcome to Santaan AI EMR</h3>
+              <p className="text-xs text-slate-600">Logged in as {currentRole}</p>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsVisible(true)}
+            className="text-cyan-600 hover:text-cyan-800 text-sm font-medium px-3 py-1 rounded-lg hover:bg-cyan-100 transition-colors"
+          >
+            Show Details
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const handleDismiss = () => {
     setIsVisible(false);
